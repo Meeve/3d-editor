@@ -100,7 +100,6 @@ class Canvas extends Component {
 
     drawScene() {
         this.state.gl.viewport(0, 0, this.getWidth(), this.getHeight());
-        console.log(0, 0, this.getWidth(), this.getHeight());
         this.state.gl.clear(this.state.gl.COLOR_BUFFER_BIT | this.state.gl.DEPTH_BUFFER_BIT);
 
         for (let model of this.state.models) {
