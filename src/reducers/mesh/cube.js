@@ -1,4 +1,4 @@
-function cube() {
+export default function cube() {
     return {
         vertices: getVertices(),
         faces: getFaces(),
@@ -18,7 +18,6 @@ function cube() {
     }
 }
 
-export default cube;
 
 function getVertices() {
     return [
