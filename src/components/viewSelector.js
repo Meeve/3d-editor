@@ -22,7 +22,7 @@ export default class ViewSelector extends Component {
     }
 
     render() {
-        let viewList = _.map(this.state.views, (view) => <option> {view.name} </option>);
+        let viewList = _.map(this.state.views, (view, key) => <option key={key}> {view.name} </option>);
         let currentView = "";
 
         if (this.state.selectedView.element != null) {

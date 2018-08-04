@@ -1,3 +1,4 @@
+import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES } from "./types";
 
 export function changeScale(scale) {
 
@@ -27,5 +28,19 @@ export function changeMeshProp(id, prop, value) {
         payload: {
             id, prop, value
         }
+    }
+}
+
+export function changeColumnSizes(newColumnSizes) {
+    return {
+        type: CHANGE_COLUMN_SIZES,
+        payload: newColumnSizes
+    }
+}
+
+export function changeRowSizes(newRowSizes) {
+    return {
+        type: CHANGE_ROW_SIZES,
+        payload: newRowSizes
     }
 }

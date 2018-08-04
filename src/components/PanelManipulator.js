@@ -4,29 +4,11 @@ import ViewSelector from "./viewSelector";
 export default class PanelManipulator extends React.Component {
     constructor(props) {
         super(props);
-        let components = [
-            {element: <ViewSelector/>, colStart: 1, colEnd: 2, rowStart: 1, rowEnd: 2},
-            {element: <ViewSelector/>, colStart: 2, colEnd: 4, rowStart: 1, rowEnd: 2},
-            {element: <ViewSelector/>, colStart: 1, colEnd: 2, rowStart: 2, rowEnd: 4},
-
-            {element: <ViewSelector/>, colStart: 2, colEnd: 3, rowStart: 2, rowEnd: 3},
-            {element: <ViewSelector/>, colStart: 3, colEnd: 4, rowStart: 2, rowEnd: 4},
-            {element: <ViewSelector/>, colStart: 2, colEnd: 3, rowStart: 3, rowEnd: 4}
-        ];
-        let columns = [640, 640, 640];
-        let rows = [316, 316, 315];
-
+        
         this.state = {
-            components,
             isUpDownResizing: false,
             isLeftRightResizing: false,
-            panelMultiplayer: false,
-            appStyles: {
-                gridTemplateColumns: _.reduce(columns, (prev, next) => prev + " " + next + "px", ""),
-                gridTemplateRows: _.reduce(rows, (prev, next) => prev + " " + next + "px", "")
-            },
-            columns,
-            rows
+            panelMultiplayer: false
         };
     }
 
