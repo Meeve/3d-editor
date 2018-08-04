@@ -1,4 +1,4 @@
-function pyramid() {
+export default function pyramid() {
     return {
         vertices: getVertices(),
         faces: getFaces(),
@@ -16,9 +16,7 @@ function pyramid() {
         ry: 0,
         rz: 0
     }
-}
-
-export default pyramid;
+};
 
 function getVertices() {
     return [
@@ -29,7 +27,7 @@ function getVertices() {
         +1.0, 0, -1.0,
 
         // Wierzchołek
-        +0.0, +1.0, +0.0
+        +0.0, +1.3, +0.0
     ];
 }
 

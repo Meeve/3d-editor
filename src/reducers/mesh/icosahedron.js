@@ -1,4 +1,4 @@
-function icosahedron() {
+export default function icosahedron() {
     return {
         vertices: getVertices(),
         faces: getFaces(),
@@ -17,8 +17,6 @@ function icosahedron() {
         rz: 0
     }
 }
-
-export default icosahedron;
 
 const X = 0.525731112119133606;
 const Z = 0.850650808352039932;
@@ -74,18 +72,6 @@ function getColors() {
         0.5, 0.0, 0.0, 1.0,
 
         // Wierzchołek
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
-        0.5, 0.5, 0.5, 1.0,
         0.5, 0.5, 0.5, 1.0,
         0.5, 0.5, 0.5, 1.0,
         0.5, 0.5, 0.5, 1.0,

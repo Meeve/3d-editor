@@ -1,4 +1,4 @@
-function plane() {
+export default function plane() {
     return {
         vertices: getVertices(),
         faces: getFaces(),
@@ -17,8 +17,6 @@ function plane() {
         rz: 0
     }
 }
-
-export default plane;
 
 function getVertices() {
     return [
