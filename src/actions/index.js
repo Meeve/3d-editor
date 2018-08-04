@@ -1,4 +1,3 @@
-
 export function changeScale(scale) {
 
     return {
@@ -10,7 +9,14 @@ export function changeScale(scale) {
 export function addCube() {
     return {
         type: 'addCube',
-        payload: {} 
+        payload: {}
+    }
+}
+
+export function addPlane() {
+    return {
+        type: 'addPlane',
+        payload: {}
     }
 }
 

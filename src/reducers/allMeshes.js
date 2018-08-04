@@ -1,9 +1,13 @@
-import createCube from './mesh/cube.js';
+import plane from "./mesh/plane";
+import cube from "./mesh/cube";
 
 export default (state = {}, action) => {
     switch (action.type) {
         case 'addCube':
-            return addCube(state);
+            return addMesh(cube(), state);
+
+        case 'addPlane':
+            return addMesh(plane(), state);
 
         case 'changeMeshProp': {
             return changeMeshProp(state, action);
@@ -12,11 +16,10 @@ export default (state = {}, action) => {
     return state;
 }
 
-function addCube(state) {
-    let cube = createCube();
-    cube.id = Math.random();
+function addMesh(mesh, state) {
+    mesh.id = Math.random();
     return {
-        [cube.id]: cube,
+        [mesh.id]: mesh,
         ...state
     };
 }
