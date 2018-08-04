@@ -1,16 +1,18 @@
 import plane from "./mesh/plane";
 import cube from "./mesh/cube";
 import pyramid from "./mesh/pyramid";
+import icosahedron from "./mesh/icosahedron";
 
 export default (state = {}, action) => {
     switch (action.type) {
         case 'addCube':
             return addMesh(cube(), state, "New cube");
-
         case 'addPlane':
             return addMesh(plane(), state, "New plane");
         case 'addPyramid':
             return addMesh(pyramid(), state, "New pyramid");
+        case 'addIcosa':
+            return addMesh(icosahedron(), state, "New icosahedron");
 
         case 'changeMeshProp': {
             return changeMeshProp(state, action);
