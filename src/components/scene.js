@@ -36,16 +36,16 @@ class Scene extends Component {
             controls = (
                 <div>
                     <div className="row">
-                        <h2>Localization</h2>
-                        X: <NumberField prop="x"/>
-                        Y: <NumberField prop="y"/>
-                        Z: <NumberField prop="z"/>
+                        <h2>Location</h2>
+                        <NumberField prop="x" label="Move X"/>
+                        <NumberField prop="y" label="Move Y"/>
+                        <NumberField prop="z" label="Move Z"/>
                     </div>
                     <div className="row">
-                        <h2>Obrót</h2>
-                        X Axis: <NumberField prop="rx"/>
-                        Y Axis: <NumberField prop="ry"/>
-                        Z Axis: <NumberField prop="rz"/>
+                        <h2>Rotation</h2>
+                        <NumberField prop="rx" label="X Axis"/>
+                        <NumberField prop="ry" label="Y Axis"/>
+                        <NumberField prop="rz" label="Z Axis"/>
                     </div>
                 </div>
             );

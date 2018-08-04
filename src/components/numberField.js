@@ -47,7 +47,9 @@ class NumberField extends Component {
     render() {
         return (
             <div>
-                {this.state.prop}
+                <label style={{width: '58px', display: 'inline-block'}}>
+                    {this.props.label}:
+                </label>
                 <input
                     onMouseDown={e => {
                         this.setState({mouseDown: true, clickedX: e.pageX, prevValue: parseInt(this.state.value)});
