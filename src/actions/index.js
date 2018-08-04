@@ -1,5 +1,4 @@
 export function changeScale(scale) {
-
     return {
         type: 'changeScale',
         payload: scale

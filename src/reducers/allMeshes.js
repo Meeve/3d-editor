@@ -4,10 +4,10 @@ import cube from "./mesh/cube";
 export default (state = {}, action) => {
     switch (action.type) {
         case 'addCube':
-            return addMesh(cube(), state);
+            return addMesh(cube(), state, "New cube");
 
         case 'addPlane':
-            return addMesh(plane(), state);
+            return addMesh(plane(), state, "New plane");
 
         case 'changeMeshProp': {
             return changeMeshProp(state, action);
@@ -16,8 +16,11 @@ export default (state = {}, action) => {
     return state;
 }
 
-function addMesh(mesh, state) {
-    mesh.id = Math.random();
+let lastId = 1;
+
+function addMesh(mesh, state, defaultName) {
+    mesh.id = lastId++;
+    mesh.name = prompt(`Type your new mesh #${mesh.id} name:`, defaultName);
     return {
         [mesh.id]: mesh,
         ...state
