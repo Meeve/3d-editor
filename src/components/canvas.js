@@ -32,10 +32,7 @@ class Canvas extends Component {
     componentDidMount() {
         this.state.gl = document.getElementById(this.state.holder).getContext("webgl");
         this.state.gl.clearColor(0.15, 0.15, 0.15, 1.0);
-
-        let width = this.getWidth();
-        let height = this.getHeight();
-        mat4.perspective(this.state.projectionMatrix, 45, width / height, 0.1, 100.0);
+        this.setPerspective();
         this.state.gl.enable(this.state.gl.DEPTH_TEST);
         this.initShaders();
 
@@ -52,6 +49,12 @@ class Canvas extends Component {
         this.setState({
             drawSceneInterval: interval
         });
+    }
+
+    setPerspective() {
+        let width = this.getWidth();
+        let height = this.getHeight();
+        mat4.perspective(this.state.projectionMatrix, 45, width / height, 0.1, 100.0);
     }
 
     componentWillUnmount() {
@@ -111,7 +114,6 @@ class Canvas extends Component {
         let modelViewMatrix = mat4.create();
         let helper = mat4.create();
 
-
         helper = mat4.create();
         mat4.translate(helper, modelViewMatrix, [0, -3, -14]);
         modelViewMatrix = helper;
@@ -148,7 +150,7 @@ class Canvas extends Component {
         this.state.gl.vertexAttribPointer(this.state.vertexPositionAttribute, 3, this.state.gl.FLOAT, false, 0, 0);
 
         this.state.gl.bindBuffer(this.state.gl.ARRAY_BUFFER, model.colorBuffer);
-        this.state.gl.vertexAttribPointer(this.state.vertexColorAttribute, 4, this.state.gl.FLOAT, false, 0, 0)
+        this.state.gl.vertexAttribPointer(this.state.vertexColorAttribute, 4, this.state.gl.FLOAT, false, 0, 0);
 
         this.state.gl.bindBuffer(this.state.gl.ELEMENT_ARRAY_BUFFER, model.faceBuffer);
         this.state.gl.drawElements(this.state.gl.TRIANGLES, model.faces.length, this.state.gl.UNSIGNED_SHORT, 0);
@@ -164,7 +166,7 @@ class Canvas extends Component {
     }
 
     render() {
-
+        this.setPerspective(); // TODO change this for event "onColumnResize"
         return (
             <div ref={(ref) => this.canvas = ref} style={{overflow: "hidden"}}>
                 <canvas
