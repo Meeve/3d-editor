@@ -57,6 +57,7 @@ class Scene extends Component {
                     <button type="button" className="btn btn-default" onClick={this.props.addCube.bind(this)}>
                         Add Cube
                     </button>
+                    &nbsp;
                     <button type="button" className="btn btn-default" onClick={this.props.addPlane.bind(this)}>
                         Add Plane
                     </button>
