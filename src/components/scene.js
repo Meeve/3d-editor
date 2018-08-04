@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {changeScale, addCube, addPlane, selectMesh, changeMeshProp} from '../actions/index.js';
+import {changeScale, addCube, addPlane, addPyramid, addIcosa, selectMesh, changeMeshProp} from '../actions/index.js';
 import NumberField from './numberField';
 import _ from 'lodash';
 
@@ -13,7 +13,7 @@ class Scene extends Component {
             scale: 1
         };
 
-        this.props.addPlane();
+        this.props.addIcosa();
     }
 
     scaleChange(event) {
@@ -61,6 +61,14 @@ class Scene extends Component {
                     <button type="button" className="btn btn-default" onClick={this.props.addPlane.bind(this)}>
                         Add Plane
                     </button>
+                    &nbsp;
+                    <button type="button" className="btn btn-default" onClick={this.props.addPyramid.bind(this)}>
+                        Add Pyramid
+                    </button>
+                    &nbsp;
+                    <button type="button" className="btn btn-default" onClick={this.props.addIcosa.bind(this)}>
+                        Add Icosahedron
+                    </button>
                 </div>
                 <div className="row">
                     <ul>
@@ -85,7 +93,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({changeScale, addCube, addPlane, selectMesh, changeMeshProp}, dispatch);
+    return bindActionCreators({changeScale, addCube, addPlane, addPyramid, addIcosa, selectMesh, changeMeshProp}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Scene);

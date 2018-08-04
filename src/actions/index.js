@@ -26,6 +26,13 @@ export function addPyramid() {
     }
 }
 
+export function addIcosa() {
+    return {
+        type: 'addIcosa',
+        payload: {}
+    }
+}
+
 export function selectMesh(el) {
     return {
         type: 'selectMesh',
