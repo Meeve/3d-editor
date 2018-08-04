@@ -1,5 +1,6 @@
 import plane from "./mesh/plane";
 import cube from "./mesh/cube";
+import pyramid from "./mesh/pyramid";
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -8,6 +9,8 @@ export default (state = {}, action) => {
 
         case 'addPlane':
             return addMesh(plane(), state, "New plane");
+        case 'addPyramid':
+            return addMesh(pyramid(), state, "New pyramid");
 
         case 'changeMeshProp': {
             return changeMeshProp(state, action);
