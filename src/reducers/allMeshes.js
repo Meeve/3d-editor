@@ -92,20 +92,20 @@ function getCube() {
 }
 
 export default (state = {}, action) => {
-    switch(action.type) {
-        case 'addCube': {
+    switch (action.type) {
+        case 'addCube':
             let cube = getCube();
             cube.id = Math.random();
             return {[cube.id]: cube, ...state};
-        } break;
+
         case 'changeMeshProp': {
             return Object.assign({}, state, {
                 [action.payload.id]: {
-                    ...state[action.payload.id] ,
+                    ...state[action.payload.id],
                     [action.payload.prop]: action.payload.value
                 }
             });
         }
-    } 
+    }
     return state;
 }

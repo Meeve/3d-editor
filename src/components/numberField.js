@@ -29,7 +29,7 @@ class NumberField extends Component {
             value: e.target.value
         });
 
-        if(!isNaN(e.target.value) && e.target.value != "") {
+        if(!isNaN(e.target.value) && e.target.value !== "") {
             this.props.changeMeshProp(this.props.selectedMesh.id, this.props.prop, parseInt(e.target.value));
         }
     }

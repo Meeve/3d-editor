@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Canvas from './canvas.js';
-import Panel from './panel.js';
+import Panel from './scene.js';
 
 export class ViewSelector extends Component {
     constructor(props) {
