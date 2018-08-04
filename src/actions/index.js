@@ -19,6 +19,13 @@ export function addPlane() {
     }
 }
 
+export function addPyramid() {
+    return {
+        type: 'addPyramid',
+        payload: {}
+    }
+}
+
 export function selectMesh(el) {
     return {
         type: 'selectMesh',
