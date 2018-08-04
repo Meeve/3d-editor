@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #727272;
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 640px 640px 640px;
+    grid-template-rows: 474px 473px;
+    user-select: none; 
+}
+
+.resizerBox {
+    display: grid;
+    grid-template-columns: 1fr 5px;
+    grid-template-rows: auto 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.leftResizer {
+     cursor: e-resize;
+     background-color: red;
+}
+
+.bottomResizer {
+    cursor: n-resize;
+    background-color: red;
+}
+
+.diagonalResizer {
+    cursor: nw-resize;
+    background-color: red;
+}
+
+.multiplayer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+}
