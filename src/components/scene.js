@@ -5,21 +5,21 @@ import { changeScale, addCube, selectMesh, changeMeshProp } from '../actions/ind
 import NumberField from './numberField.js';
 import _ from 'lodash';
 
-class Panel extends Component {
+class Scene extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       scale: 1
     }
   }
-  
-  scaleChange(e) {
+
+  scaleChange(event) {
     this.setState({
-      scale: e.target.value
+      scale: event.target.value
     });
 
-    this.props.changeScale(e.target.value);
+    this.props.changeScale(event.target.value);
   }
 
   changeProp(prop, e) {
@@ -77,4 +77,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Panel);
+export default connect(mapStateToProps, mapDispatchToProps)(Scene);
