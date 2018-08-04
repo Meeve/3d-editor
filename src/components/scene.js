@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {changeScale, addCube, addPlane, selectMesh, changeMeshProp} from '../actions/index.js';
-import NumberField from './numberField.js';
+import NumberField from './numberField';
 import _ from 'lodash';
 
 class Scene extends Component {
@@ -37,15 +37,15 @@ class Scene extends Component {
                 <div>
                     <div className="row">
                         <h2>Localization</h2>
-                        <NumberField prop="x"/>
-                        <NumberField prop="y"/>
-                        <NumberField prop="z"/>
+                        X: <NumberField prop="x"/>
+                        Y: <NumberField prop="y"/>
+                        Z: <NumberField prop="z"/>
                     </div>
                     <div className="row">
                         <h2>Obrót</h2>
-                        <NumberField prop="rx"/>
-                        <NumberField prop="ry"/>
-                        <NumberField prop="rz"/>
+                        X Axis: <NumberField prop="rx"/>
+                        Y Axis: <NumberField prop="ry"/>
+                        Z Axis: <NumberField prop="rz"/>
                     </div>
                 </div>
             );
