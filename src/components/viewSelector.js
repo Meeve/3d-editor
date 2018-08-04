@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Canvas from './canvas.js';
 import Scene from './scene.js';
 
-export class ViewSelector extends Component {
+export default class ViewSelector extends Component {
     constructor(props) {
         super(props);
 
