@@ -63,7 +63,11 @@ class Scene extends Component {
                 </div>
                 <div className="row">
                     <ul>
-                        {_.map(this.props.meshes, el => <li onClick={this.props.selectMesh.bind(this, el)}>test</li>)}
+                        {_.map(this.props.meshes, el =>
+                            <li onClick={this.props.selectMesh.bind(this, el)} title={JSON.stringify(el)}>
+                                #{el.id} - {el.name}
+                            </li>
+                        )}
                     </ul>
                 </div>
                 {controls}
