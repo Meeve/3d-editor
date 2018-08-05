@@ -12,20 +12,8 @@ class PanelResizer extends React.Component {
 
         this.state = {
             isUpDownResizing: false,
-            isLeftRightResizing: false,
-            appStyles: this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)
+            isLeftRightResizing: false
         };
-    }
-
-    calculateGridStyles(cols, rows) {
-        return {
-            gridTemplateColumns: this.transformArraySizesToStyle(cols),
-            gridTemplateRows: this.transformArraySizesToStyle(rows)
-        };
-    }
-
-    transformArraySizesToStyle(arraySizes) {
-        return _.reduce(arraySizes, (prev, next) => prev + " " + next + "px", "");
     }
 
     leftResize(colNumber, e) {
@@ -67,12 +55,6 @@ class PanelResizer extends React.Component {
             rows[this.state.activeRow] = this.state.prevActiveRowValue + e.pageY - this.state.yMouseClick;
             rows[this.state.activeRow + 1] = this.state.prevSibilingRowValue - (e.pageY - this.state.yMouseClick);
             this.props.changeRowSizes(rows);
-        }
-
-        if(this.state.isLeftRightResizing || this.state.isUpDownResizing) {
-            this.setState({
-                appStyles: this.calculateGridStyles(columns, rows)
-            });
         }
     }
 
@@ -137,12 +119,23 @@ class PanelResizer extends React.Component {
         </div>
     }
 
+    calculateGridStyles(cols, rows) {
+        return {
+            gridTemplateColumns: this.transformArraySizesToStyle(cols),
+            gridTemplateRows: this.transformArraySizesToStyle(rows)
+        };
+    }
+
+    transformArraySizesToStyle(arraySizes) {
+        return _.reduce(arraySizes, (prev, next) => prev + " " + next + "px", "");
+    }
+
     render() {
         const resizerBoxes = _.map(this.props.panelLayout.components, (el, key) => this.createResizeBox(el, key));
         
         return (
             <div className="app" onMouseMove={this.appResize.bind(this)} onMouseUp={this.stopResizing.bind(this)}
-                 style={this.state.appStyles}>
+                 style={this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)}>
                  {resizerBoxes}
             </div>
         );
@@ -155,8 +148,4 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ ...actions }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PanelResizer);
+export default connect(mapStateToProps, actions)(PanelResizer);

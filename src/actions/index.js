@@ -1,4 +1,4 @@
-import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES } from "./types";
+import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS, REMOVE_COLUMN } from "./types";
 
 export function changeScale(scale) {
 
@@ -42,5 +42,33 @@ export function changeRowSizes(newRowSizes) {
     return {
         type: CHANGE_ROW_SIZES,
         payload: newRowSizes
+    }
+}
+
+export function removeComponent(componentToDelete) {
+    return {
+        type: REMOVE_COMPONENT,
+        componentToDelete
+    }
+}
+
+export function removeRow(rowToRemove) {
+    return {
+        type: REMOVE_ROW,
+        rowToRemove
+    }
+}
+
+export function updateComponents(components) {
+    return {
+        type: UPDATE_COMPONENTS,
+        components
+    }
+}
+
+export function removeColumn(columnToRemove) {
+    return {
+        type: REMOVE_COLUMN,
+        columnToRemove
     }
 }
