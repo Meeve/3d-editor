@@ -1,6 +1,6 @@
 import React from 'react';
 import ViewSelector from "../components/viewSelector";
-import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS, REMOVE_COLUMN } from "../actions/types";
+import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS, REMOVE_COLUMN, ADD_ROW, ADD_COLUMN } from "../actions/types";
 
 function getDefaultPanelLayout() {
     const colSize = window.innerWidth / 4;
@@ -61,6 +61,26 @@ export default (state = getDefaultPanelLayout(), action) => {
             return {
                 ...state,
                 columnSizes: state.columnSizes.slice(0, action.columnToRemove).concat(state.columnSizes.slice(action.columnToRemove + 1))
+            }
+        }
+        case ADD_ROW: {
+            return {
+                ...state,
+                rowSizes: [
+                    ...state.rowSizes.slice(0, action.index),
+                    0,
+                    ...state.rowSizes.slice(action.index)
+                ]
+            }
+        }
+        case ADD_COLUMN: {
+            return {
+                ...state,
+                columnSizes: [
+                    ...state.columnSizes.slice(0, action.index),
+                    0,
+                    ...state.columnSizes.slice(action.index)
+                ]
             }
         }
     }

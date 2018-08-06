@@ -124,35 +124,67 @@ class PanelManipulator extends React.Component {
         this.props.removeComponent(rightComponent);
     }
 
+    wasBottomLeave(targetBoundingRect, event) {
+        return targetBoundingRect.top + targetBoundingRect.height <= event.pageY;
+    }
+
+    handleBottomLeave(element) {
+        const indexInRowArray = element.rowStart - 1;
+        this.props.addRow(indexInRowArray);
+
+        const newComponent = {
+            ...element,
+            rowEnd: element.rowStart + 1
+        };
+
+        const prevElementRow = element.rowStart;
+        const newComponents = _.map(this.props.panelLayout.components, component => {
+            if (component.rowStart > prevElementRow || element == component)
+                component.rowStart++;
+            if (component.rowEnd > prevElementRow)
+                component.rowEnd++;
+            return component;
+        });
+
+        this.props.updateComponents(newComponents.concat(newComponent));
+    }
+
+    wasLeftLeave(targetBoundingRect, event) {
+        return targetBoundingRect.left >= event.pageX; 
+    }
+
+    handleLeftLeave(element) {
+        const indexInColumnArray = element.colEnd - 1;
+        this.props.addColumn(indexInColumnArray);
+
+        const newComponent = {
+            ...element,
+            colStart: element.colEnd,
+            colEnd: element.colEnd + 1
+        };
+
+        const newComponents = _.map(this.props.panelLayout.components, component => {
+            if (component.colStart >= element.colEnd)
+                component.colStart++;
+            if (component.colEnd >= element.colEnd)
+                component.colEnd++;
+            if(component == element)
+                component.colEnd--;
+            return component;
+        }); 
+
+        this.props.updateComponents(newComponents.concat(newComponent));
+
+    }
+
     multiplayerMouseLeave(element, event) {
         const targetBoundingRect = event.target.getBoundingClientRect();
 
         if(this.state.panelMultiplayer) {
-            if (targetBoundingRect.top + targetBoundingRect.height <= event.pageY) {
-                const rows = this.state.rows.slice(0, element.rowStart - 1).concat([0, ...this.state.rows.slice(element.rowStart - 1)]);
-                const newComponent = {
-                    ...element,
-                    rowEnd: element.rowStart + 1,
-                    element: <ViewSelector/>
-                };
-                let rowStart = element.rowStart;
-                const newComponents = _.map(this.state.components, component => {
-                    if (component.rowStart > rowStart || component == element)
-                        component.rowStart++;
-                    if (component.rowEnd > element.rowStart || component == element)
-                        component.rowEnd++;
-                    return component;
-                });
-    
-                this.setState({
-                    rows,
-                    appStyles: {
-                        ...this.state.appStyles,
-                        gridTemplateRows: _.reduce(rows, (prev, next) => prev + " " + next + "px", "")
-                    },
-                    panelMultiplayer: false,
-                    components: newComponents.concat(newComponent)
-                }, this.bottomResize.bind(this, newComponent.rowStart - 1, {...event}));
+            if (this.wasBottomLeave(targetBoundingRect, event)) {
+                this.handleBottomLeave(element);
+            } else if (this.wasLeftLeave(targetBoundingRect, event)) {
+                this.handleLeftLeave(element);
             } else if (this.wasUpperLeave(targetBoundingRect, event)) {
                 this.handleUpperLeave(element);
             } else if (this.wasRightLeave(targetBoundingRect, event)) {
