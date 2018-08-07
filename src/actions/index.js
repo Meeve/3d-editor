@@ -2,7 +2,6 @@ import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UP
      REMOVE_COLUMN, ADD_ROW, ADD_COLUMN, START_BOTTOM_UP_RESIZING, STOP_RESIZING, TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS } from "./types";
 
 export function changeScale(scale) {
-
     return {
         type: 'changeScale',
         payload: scale
@@ -12,7 +11,28 @@ export function changeScale(scale) {
 export function addCube() {
     return {
         type: 'addCube',
-        payload: {} 
+        payload: {}
+    }
+}
+
+export function addPlane() {
+    return {
+        type: 'addPlane',
+        payload: {}
+    }
+}
+
+export function addPyramid() {
+    return {
+        type: 'addPyramid',
+        payload: {}
+    }
+}
+
+export function addIcosa() {
+    return {
+        type: 'addIcosa',
+        payload: {}
     }
 }
 
@@ -89,7 +109,6 @@ export function addColumn(index) {
 }
 
 export function startBottomUpResizing(activeRow, yMouseClick) {
-    console.log(activeRow, yMouseClick);
     return {
         type: START_BOTTOM_UP_RESIZING,
         activeRow,
