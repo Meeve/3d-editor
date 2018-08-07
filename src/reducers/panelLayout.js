@@ -1,6 +1,7 @@
 import React from 'react';
 import ViewSelector from "../components/viewSelector";
-import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS, REMOVE_COLUMN, ADD_ROW, ADD_COLUMN } from "../actions/types";
+import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS,
+     REMOVE_COLUMN, ADD_ROW, ADD_COLUMN, START_BOTTOM_UP_RESIZING, STOP_RESIZING, TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS } from "../actions/types";
 
 function getDefaultPanelLayout() {
     const colSize = window.innerWidth / 4;
@@ -82,6 +83,35 @@ export default (state = getDefaultPanelLayout(), action) => {
                     ...state.columnSizes.slice(action.index)
                 ]
             }
+        }
+        case START_BOTTOM_UP_RESIZING: {
+            return {
+                ...state,
+                isUpDownResizing: true,
+                yMouseClick: action.yMouseClick,
+                activeRow: action.activeRow,
+                prevActiveRowValue: state.rowSizes[action.activeRow],
+                prevSibilingRowValue: state.rowSizes[action.activeRow + 1]
+            }
+        }
+        case STOP_RESIZING: {
+            return {
+                ...state,
+                isUpDownResizing: false,
+                isLeftRightResizing: false
+            }
+        }
+        case TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS: {
+            return {
+                ...state,
+                rowSizes: state.rowSizes.slice(0, state.activeRow).concat(
+                        [   
+                            state.prevActiveRowValue + action.yOffset - state.yMouseClick,
+                            state.prevSibilingRowValue - (action.yOffset - state.yMouseClick),
+                        ], 
+                        state.rowSizes.slice(state.activeRow + 2)
+                    )
+            };
         }
     }
     return state;

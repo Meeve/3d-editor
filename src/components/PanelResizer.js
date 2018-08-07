@@ -27,13 +27,7 @@ class PanelResizer extends React.Component {
     }
 
     bottomResize(rowNumber, e) {
-        this.setState({
-            isUpDownResizing: true,
-            yMouseClick: e.pageY,
-            activeRow: rowNumber,
-            prevActiveRowValue: this.props.panelLayout.rowSizes[rowNumber],
-            prevSibilingRowValue: this.props.panelLayout.rowSizes[rowNumber + 1]
-        });
+        this.props.startBottomUpResizing(rowNumber, e.pageY);
     }
 
     diagonallyResize(rowNumber, colNumber, e) {
@@ -43,7 +37,6 @@ class PanelResizer extends React.Component {
 
     appResize(e) {
         let columns = Object.assign([], this.props.panelLayout.columnSizes);
-        let rows = Object.assign([], this.props.panelLayout.rowSizes);
         
         if (this.state.isLeftRightResizing) {
             columns[this.state.activeColumn] = this.state.prevActiveColumnValue + e.pageX - this.state.xMouseClick;
@@ -51,18 +44,13 @@ class PanelResizer extends React.Component {
             this.props.changeColumnSizes(columns);
         }
 
-        if (this.state.isUpDownResizing) {
-            rows[this.state.activeRow] = this.state.prevActiveRowValue + e.pageY - this.state.yMouseClick;
-            rows[this.state.activeRow + 1] = this.state.prevSibilingRowValue - (e.pageY - this.state.yMouseClick);
-            this.props.changeRowSizes(rows);
+        if (this.props.panelLayout.isUpDownResizing) {
+            this.props.transformRowSizesBetweenSiblings(e.pageY);
         }
     }
 
     stopResizing() {
-        this.setState({
-            isLeftRightResizing: false,
-            isUpDownResizing: false
-        });
+        this.props.stopResizing();
     }
 
     isLastColumn(colCounter) {

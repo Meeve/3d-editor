@@ -128,7 +128,7 @@ class PanelManipulator extends React.Component {
         return targetBoundingRect.top + targetBoundingRect.height <= event.pageY;
     }
 
-    handleBottomLeave(element) {
+    handleBottomLeave(element, event) {
         const indexInRowArray = element.rowStart - 1;
         this.props.addRow(indexInRowArray);
 
@@ -147,6 +147,7 @@ class PanelManipulator extends React.Component {
         });
 
         this.props.updateComponents(newComponents.concat(newComponent));
+        this.props.startBottomUpResizing(prevElementRow - 1, event.pageY);
     }
 
     wasLeftLeave(targetBoundingRect, event) {
@@ -182,7 +183,7 @@ class PanelManipulator extends React.Component {
 
         if(this.state.panelMultiplayer) {
             if (this.wasBottomLeave(targetBoundingRect, event)) {
-                this.handleBottomLeave(element);
+                this.handleBottomLeave(element, event);
             } else if (this.wasLeftLeave(targetBoundingRect, event)) {
                 this.handleLeftLeave(element);
             } else if (this.wasUpperLeave(targetBoundingRect, event)) {
