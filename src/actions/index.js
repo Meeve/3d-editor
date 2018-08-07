@@ -1,5 +1,6 @@
 import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS,
-     REMOVE_COLUMN, ADD_ROW, ADD_COLUMN, START_BOTTOM_UP_RESIZING, STOP_RESIZING, TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS } from "./types";
+     REMOVE_COLUMN, ADD_ROW, ADD_COLUMN, START_BOTTOM_UP_RESIZING, STOP_RESIZING, TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS,
+     START_LEFT_RIGHT_RESIZING, TRANSFORM_COLUMN_SIZES_BETWEEN_SIBLINGS } from "./types";
 
 export function changeScale(scale) {
 
@@ -89,7 +90,6 @@ export function addColumn(index) {
 }
 
 export function startBottomUpResizing(activeRow, yMouseClick) {
-    console.log(activeRow, yMouseClick);
     return {
         type: START_BOTTOM_UP_RESIZING,
         activeRow,
@@ -97,9 +97,11 @@ export function startBottomUpResizing(activeRow, yMouseClick) {
     }
 }
 
-export function stopResizing() {
+export function startLeftRightResizing(activeColumn, xMouseClick) {
     return {
-        type: STOP_RESIZING
+        type: START_LEFT_RIGHT_RESIZING,
+        activeColumn,
+        xMouseClick
     }
 }
 
@@ -107,5 +109,18 @@ export function transformRowSizesBetweenSiblings(yOffset) {
     return {
         type: TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS,
         yOffset
+    }
+}
+
+export function transformColumnSizesBetweenSiblings(xOffset) {
+    return {
+        type: TRANSFORM_COLUMN_SIZES_BETWEEN_SIBLINGS,
+        xOffset
+    }
+} 
+
+export function stopResizing() {
+    return {
+        type: STOP_RESIZING
     }
 }
