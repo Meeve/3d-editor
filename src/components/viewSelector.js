@@ -3,7 +3,7 @@ import Canvas from './canvas.js';
 import Scene from './scene.js';
 import Scroller from "./Scroller";
 
-export class ViewSelector extends Component {
+export default class ViewSelector extends Component {
     constructor(props) {
         super(props);
 
@@ -31,7 +31,7 @@ export class ViewSelector extends Component {
     }
 
     render() {
-        let viewList = _.map(this.state.views, (view) => <option> {view.name} </option>);
+        let viewList = _.map(this.state.views, (view, key) => <option key={key}> {view.name} </option>);
         let currentView = "";
 
         if (this.state.selectedView.element != null) {
