@@ -1,5 +1,5 @@
 import React from 'react';
-import ViewSelector from "../components/viewSelector";
+import ViewSelector from "../components/ViewSelector";
 import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS,
      REMOVE_COLUMN, ADD_ROW, ADD_COLUMN, START_BOTTOM_UP_RESIZING, STOP_RESIZING, TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS } from "../actions/types";
 
@@ -8,19 +8,19 @@ function getDefaultPanelLayout() {
     const rowSize = window.innerHeight / 4;
     return {
         components: [
-            {element: <ViewSelector/>, colStart: 1, colEnd: 2, rowStart: 1, rowEnd: 2},
-            {element: <ViewSelector/>, colStart: 3, colEnd: 4, rowStart: 1, rowEnd: 2},
-            {element: <ViewSelector/>, colStart: 2, colEnd: 3, rowStart: 1, rowEnd: 2},
+            {element: ViewSelector, colStart: 1, colEnd: 2, rowStart: 1, rowEnd: 2},
+            {element: ViewSelector, colStart: 3, colEnd: 4, rowStart: 1, rowEnd: 2},
+            {element: ViewSelector, colStart: 2, colEnd: 3, rowStart: 1, rowEnd: 2},
 
-            {element: <ViewSelector/>, colStart: 1, colEnd: 3, rowStart: 3, rowEnd: 4},
-            {element: <ViewSelector/>, colStart: 3, colEnd: 4, rowStart: 2, rowEnd: 5},
-            {element: <ViewSelector/>, colStart: 1, colEnd: 3, rowStart: 4, rowEnd: 5},
-            {element: <ViewSelector/>, colStart: 1, colEnd: 3, rowStart: 2, rowEnd: 3, id: 'udpa'},
+            {element: ViewSelector, colStart: 1, colEnd: 3, rowStart: 3, rowEnd: 4},
+            {element: ViewSelector, colStart: 3, colEnd: 4, rowStart: 2, rowEnd: 5},
+            {element: ViewSelector, colStart: 1, colEnd: 3, rowStart: 4, rowEnd: 5},
+            {element: ViewSelector, colStart: 1, colEnd: 3, rowStart: 2, rowEnd: 3, id: 'udpa'},
 
-            {element: <ViewSelector/>, colStart: 4, colEnd: 5, rowStart: 1, rowEnd: 2},
-            {element: <ViewSelector/>, colStart: 4, colEnd: 5, rowStart: 2, rowEnd: 3},
-            {element: <ViewSelector/>, colStart: 4, colEnd: 5, rowStart: 3, rowEnd: 4},
-            {element: <ViewSelector/>, colStart: 4, colEnd: 5, rowStart: 4, rowEnd: 5},
+            {element: ViewSelector, colStart: 4, colEnd: 5, rowStart: 1, rowEnd: 2},
+            {element: ViewSelector, colStart: 4, colEnd: 5, rowStart: 2, rowEnd: 3},
+            {element: ViewSelector, colStart: 4, colEnd: 5, rowStart: 3, rowEnd: 4},
+            {element: ViewSelector, colStart: 4, colEnd: 5, rowStart: 4, rowEnd: 5},
         ],
         columnSizes: [colSize, colSize, colSize, colSize],
         rowSizes: [rowSize, rowSize, rowSize, rowSize]

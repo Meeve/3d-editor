@@ -14,7 +14,7 @@ body {
 .resizerBox {
     display: grid;
     grid-template-columns: 1fr 5px;
-    grid-template-rows: auto 5px;
+    grid-template-rows: 1fr 5px;
     overflow: hidden;
     position: relative;
 }
