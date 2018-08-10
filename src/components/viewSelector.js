@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Canvas from './canvas.js';
 import Scene from './scene.js';
+import Scroller from "./Scroller";
 
 export class ViewSelector extends Component {
     constructor(props) {
@@ -8,10 +9,18 @@ export class ViewSelector extends Component {
 
         this.state = {
             views: {
-                Canvas: {name: "Canvas", element: Canvas},
-                Scene: {name: "Scene", element: Scene}
+                Canvas: {
+                    name: "Canvas", 
+                    element: <Canvas/>
+                },
+                Scene: {
+                    name: "Scene",
+                    element: <Scroller>
+                            { Scene } 
+                        </Scroller>
+                        }
             },
-            selectedView: {name: "", element: Canvas}
+            selectedView: {name: "", element: <Canvas />}
         };
     }
 
@@ -26,7 +35,7 @@ export class ViewSelector extends Component {
         let currentView = "";
 
         if (this.state.selectedView.element != null) {
-            currentView = <this.state.selectedView.element/>;
+            currentView = this.state.selectedView.element;
         }
 
         return (
