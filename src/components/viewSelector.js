@@ -6,8 +6,11 @@ import Scroller from "./Scroller";
 export default class ViewSelector extends Component {
     constructor(props) {
         super(props);
-
+        
+        const menuBarHeight = 25;
+        
         this.state = {
+            menuBarHeight,
             views: {
                 Canvas: {
                     name: "Canvas", 
@@ -15,7 +18,7 @@ export default class ViewSelector extends Component {
                 },
                 Scene: {
                     name: "Scene",
-                    element: <Scroller>
+                    element: <Scroller height={ this.props.componentHeight - menuBarHeight } >
                             { Scene } 
                         </Scroller>
                         }

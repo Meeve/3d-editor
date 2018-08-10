@@ -13,8 +13,6 @@ body {
 
 .resizerBox {
     display: grid;
-    grid-template-columns: 1fr 5px;
-    grid-template-rows: 1fr 5px;
     overflow: hidden;
     position: relative;
 }
@@ -41,4 +39,17 @@ body {
     width: 10px;
     height: 10px;
     background-color: green;
+}
+
+.scrollerOuter {
+    background-color: rgb(91, 91, 91);
+    border: 1px solid rgb(81, 81, 81);
+    margin: 2px;
+    border-radius: 10px;
+}
+
+.scrollerHandler {
+    background-color: rgb(140, 140, 140);
+    border-radius: 10px;
+    cursor: pointer;
 }

@@ -81,10 +81,10 @@ class PanelResizer extends React.Component {
     getComponentToRender(el) {
         let componentWidth = _.sum(this.props.panelLayout.columnSizes.slice(el.colStart - 1, el.colEnd - 1));
         let componentHeight = _.sum(this.props.panelLayout.rowSizes.slice(el.rowStart - 1, el.rowEnd - 1));
-
+        
         return <el.element 
-            parentWidth={ componentWidth - this.state.borderSize }
-            parentHeight={ componentHeight - this.state.borderSize }
+            componentWidth={ componentWidth - this.state.borderSize }
+            componentHeight={ componentHeight - this.state.borderSize }
         />
     }
 
@@ -133,7 +133,7 @@ class PanelResizer extends React.Component {
 
     render() {
         const resizerBoxes = _.map(this.props.panelLayout.components, (el, key) => this.createResizeBox(el, key));
-        
+
         return (
             <div className="app" onMouseMove={this.appResize.bind(this)} onMouseUp={this.stopResizing.bind(this)}
                  style={this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)}>
