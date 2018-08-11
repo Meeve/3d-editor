@@ -104,11 +104,13 @@ class PanelManipulator extends React.Component {
 
     handleUpperLeave(element) {
         const upperComponent = this.getUpperSiblingComponentWithSameWidth(element);
-        const components = this.calculateNewRowPlaces(element.rowStart);
-        const componentWithUpdatedRezisedElement = this.getComponentWithUpdatedRowRezisedElement(components, element, upperComponent);
-        
-        this.props.updateComponents(componentWithUpdatedRezisedElement);
-        this.props.removeComponent(upperComponent);
+        if(upperComponent) {
+            const components = this.calculateNewRowPlaces(element.rowStart);
+            const componentWithUpdatedRezisedElement = this.getComponentWithUpdatedRowRezisedElement(components, element, upperComponent);
+            
+            this.props.updateComponents(componentWithUpdatedRezisedElement);
+            this.props.removeComponent(upperComponent);
+        }
     }
 
     wasRightLeave(targetBoundingRect, event) {
@@ -117,11 +119,13 @@ class PanelManipulator extends React.Component {
     
     handleRightLeave(element) {
         const rightComponent = this.getRightSiblingComponentWithSameHeight(element);
-        const components = this.calculateNewColumnPlaces(element.colEnd);
-        const componentWithUpdatedRezisedElement = this.getComponentWithUpdatedColumnRezisedElement(components, element, rightComponent);
-
-        this.props.updateComponents(componentWithUpdatedRezisedElement);
-        this.props.removeComponent(rightComponent);
+        if(rightComponent) {
+            const components = this.calculateNewColumnPlaces(element.colEnd);
+            const componentWithUpdatedRezisedElement = this.getComponentWithUpdatedColumnRezisedElement(components, element, rightComponent);
+    
+            this.props.updateComponents(componentWithUpdatedRezisedElement);
+            this.props.removeComponent(rightComponent);
+        }
     }
 
     wasBottomLeave(targetBoundingRect, event) {
@@ -154,7 +158,7 @@ class PanelManipulator extends React.Component {
         return targetBoundingRect.left >= event.pageX; 
     }
 
-    handleLeftLeave(element) {
+    handleLeftLeave(element, event) {
         const indexInColumnArray = element.colEnd - 1;
         this.props.addColumn(indexInColumnArray);
 
@@ -164,6 +168,7 @@ class PanelManipulator extends React.Component {
             colEnd: element.colEnd + 1
         };
 
+        const prevElementCol = element.colEnd;
         const newComponents = _.map(this.props.panelLayout.components, component => {
             if (component.colStart >= element.colEnd)
                 component.colStart++;
@@ -175,6 +180,7 @@ class PanelManipulator extends React.Component {
         }); 
 
         this.props.updateComponents(newComponents.concat(newComponent));
+        this.props.startLeftRightResizing(prevElementCol - 2, event.pageX);
 
     }
 
@@ -185,7 +191,7 @@ class PanelManipulator extends React.Component {
             if (this.wasBottomLeave(targetBoundingRect, event)) {
                 this.handleBottomLeave(element, event);
             } else if (this.wasLeftLeave(targetBoundingRect, event)) {
-                this.handleLeftLeave(element);
+                this.handleLeftLeave(element, event);
             } else if (this.wasUpperLeave(targetBoundingRect, event)) {
                 this.handleUpperLeave(element);
             } else if (this.wasRightLeave(targetBoundingRect, event)) {
