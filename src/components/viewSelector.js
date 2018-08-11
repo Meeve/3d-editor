@@ -6,40 +6,37 @@ import Scroller from "./Scroller";
 export default class ViewSelector extends Component {
     constructor(props) {
         super(props);
-        
-        const menuBarHeight = 25;
-        
+
         this.state = {
-            menuBarHeight,
+            menuBarHeight: 25,
             views: {
                 Canvas: {
                     name: "Canvas", 
-                    element: <Canvas/>
+                    getElement: () => <Canvas/>
                 },
                 Scene: {
                     name: "Scene",
-                    element: <Scroller height={ this.props.componentHeight - menuBarHeight } >
-                            { Scene } 
-                        </Scroller>
-                        }
+                    getElement: () => {
+                        return (<Scroller height={ this.props.componentHeight - this.state.menuBarHeight } >
+                            <Scene /> 
+                        </Scroller>);
+                    }
+                },
             },
-            selectedView: {name: "", element: <Canvas />}
+            selectedView: "Canvas"
         };
     }
 
     viewChanged(event) {
         this.setState({
-            selectedView: this.state.views[event.target.value]
+            selectedView: event.target.value
         });
     }
 
     render() {
         let viewList = _.map(this.state.views, (view, key) => <option key={key}> {view.name} </option>);
-        let currentView = "";
 
-        if (this.state.selectedView.element != null) {
-            currentView = this.state.selectedView.element;
-        }
+        const currentView = this.state.views[this.state.selectedView].getElement();
 
         return (
             <div style={{display: "grid", gridTemplateRows: "1fr 25px", overflow: "hidden"}}>

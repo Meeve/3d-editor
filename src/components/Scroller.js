@@ -57,18 +57,21 @@ export default class Scroller extends React.Component {
 
     onScroll(event) {
         let childOffsetTop = this.state.childOffsetTop + (-event.deltaY);
+        const maxValue = -(this.childHolder.current.clientHeight - this.props.height);
 
-        console.log(childOffsetTop);
-        if(childOffsetTop + this.childHolder.current.clientHeight < this.props.height) 
-            childOffsetTop = -(this.childHolder.current.clientHeight - this.props.height);
+        if(childOffsetTop < maxValue) 
+            childOffsetTop = maxValue;
 
-        console.log(childOffsetTop);
         if(childOffsetTop > 0)
             childOffsetTop = 0;
 
-
+        const prop = childOffsetTop / maxValue;
+        console.log(prop);
+        const scrollGap = this.props.height - 6 - this.scroller.current.clientHeight;
+        console.log(this.props.height, this.scroller.current.clientHeight);
         this.setState({
-            childOffsetTop
+            childOffsetTop,
+            scrollBarPosition: (scrollGap * prop) 
         });
     }
 
@@ -79,6 +82,7 @@ export default class Scroller extends React.Component {
     }
 
     render() {
+        console.log(this.props.height);
         let scrollerHandlerStyle = { height: 0 };
         let heightRatio = 0;
 
@@ -98,7 +102,7 @@ export default class Scroller extends React.Component {
 
                     <div style={{overflow: "hidden"}}>
                         <div className="childHolderStyle" ref={this.childHolder} style={this.getChildHolderStyle()} >
-                            <this.props.children/>
+                            { this.props.children }
                         </div>
                     </div>
                     <div className="scrollerOuter" style={this.getScrollerOuterStyle(heightRatio)}>
