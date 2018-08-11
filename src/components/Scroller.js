@@ -4,12 +4,14 @@ export default class Scroller extends React.Component {
     constructor(props) {
         super(props);
         this.childHolder = React.createRef();
-        this.scrollHolder = React.createRef();
         this.scroller = React.createRef();
 
         this.state = {
             prevScrollBarPosition: 0,
             scrollBarPosition: 0,
+
+            childOffsetTop: 0,
+
             outerScrollerMargin: 2,
             outerScrollerBorder: 1
         };
@@ -30,8 +32,8 @@ export default class Scroller extends React.Component {
                 scrollBarPosition = 0;
             
             const marginAndBordersHeight = this.state.outerScrollerMargin * 2 + this.state.outerScrollerBorder * 2;
-            if(scrollBarPosition + this.scroller.current.clientHeight + marginAndBordersHeight > this.scrollHolder.current.clientHeight)
-                scrollBarPosition = this.scrollHolder.current.clientHeight - this.scroller.current.clientHeight - marginAndBordersHeight;
+            if(scrollBarPosition + this.scroller.current.clientHeight + marginAndBordersHeight > this.props.height)
+                scrollBarPosition = this.props.height - this.scroller.current.clientHeight - marginAndBordersHeight;
             
             this.setState({
                 scrollBarPosition
@@ -53,12 +55,35 @@ export default class Scroller extends React.Component {
         }
     }
 
+    onScroll(event) {
+        let childOffsetTop = this.state.childOffsetTop + (-event.deltaY);
+
+        console.log(childOffsetTop);
+        if(childOffsetTop + this.childHolder.current.clientHeight < this.props.height) 
+            childOffsetTop = -(this.childHolder.current.clientHeight - this.props.height);
+
+        console.log(childOffsetTop);
+        if(childOffsetTop > 0)
+            childOffsetTop = 0;
+
+
+        this.setState({
+            childOffsetTop
+        });
+    }
+
+    getChildHolderStyle() {
+        return {
+            transform: `translateY(${this.state.childOffsetTop}px)`
+        };
+    }
+
     render() {
         let scrollerHandlerStyle = { height: 0 };
         let heightRatio = 0;
 
         if(this.childHolder.current) {
-            heightRatio = this.scrollHolder.current.clientHeight / this.childHolder.current.clientHeight;
+            heightRatio = this.props.height / this.childHolder.current.clientHeight;
             scrollerHandlerStyle = {
                 height: (heightRatio * 100) + "%",
                 transform: `translateY(${this.state.scrollBarPosition}px)`
@@ -67,12 +92,12 @@ export default class Scroller extends React.Component {
 
         return (
             <div style={{display: "grid", gridTemplateColumns: "1fr 15px", overflow: "hidden"}} 
-                ref={this.scrollHolder} 
+                onWheel={this.onScroll.bind(this)}
                 onMouseMove={this.onMouseMove.bind(this)}
                 onMouseUp={this.stopScrolling.bind(this)}>
 
                     <div style={{overflow: "hidden"}}>
-                        <div ref={this.childHolder} >
+                        <div className="childHolderStyle" ref={this.childHolder} style={this.getChildHolderStyle()} >
                             <this.props.children/>
                         </div>
                     </div>

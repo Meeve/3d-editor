@@ -51,3 +51,7 @@ body {
     border-radius: 10px;
     cursor: pointer;
 }
+
+.childHolderStyle { 
+    transition: 0.2s;
+}
