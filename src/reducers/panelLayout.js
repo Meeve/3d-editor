@@ -1,7 +1,8 @@
 import React from 'react';
 import ViewSelector from "../components/viewSelector";
 import { CHANGE_COLUMN_SIZES, CHANGE_ROW_SIZES, REMOVE_COMPONENT, REMOVE_ROW, UPDATE_COMPONENTS,
-     REMOVE_COLUMN, ADD_ROW, ADD_COLUMN, START_BOTTOM_UP_RESIZING, STOP_RESIZING, TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS } from "../actions/types";
+     REMOVE_COLUMN, ADD_ROW, ADD_COLUMN, START_BOTTOM_UP_RESIZING, STOP_RESIZING, TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS,
+     START_LEFT_RIGHT_RESIZING, TRANSFORM_COLUMN_SIZES_BETWEEN_SIBLINGS } from "../actions/types";
 
 function getDefaultPanelLayout() {
     const colSize = window.innerWidth / 4;
@@ -94,6 +95,16 @@ export default (state = getDefaultPanelLayout(), action) => {
                 prevSibilingRowValue: state.rowSizes[action.activeRow + 1]
             }
         }
+        case START_LEFT_RIGHT_RESIZING: {
+            return {
+                ...state,
+                isLeftRightResizing: true,
+                xMouseClick: action.xMouseClick,
+                activeColumn: action.activeColumn,
+                prevActiveColumnValue: state.columnSizes[action.activeColumn],
+                prevSibilingColumnValue: state.columnSizes[action.activeColumn + 1] 
+            }
+        }
         case STOP_RESIZING: {
             return {
                 ...state,
@@ -112,6 +123,18 @@ export default (state = getDefaultPanelLayout(), action) => {
                         state.rowSizes.slice(state.activeRow + 2)
                     )
             };
+        }
+        case TRANSFORM_COLUMN_SIZES_BETWEEN_SIBLINGS: {
+            return {
+                ...state,
+                columnSizes: state.columnSizes.slice(0, state.activeColumn).concat(
+                    [
+                        state.prevActiveColumnValue + action.xOffset - state.xMouseClick,
+                        state.prevSibilingColumnValue - (action.xOffset - state.xMouseClick)
+                    ],
+                    state.columnSizes.slice(state.activeColumn + 2)
+                )
+            }
         }
     }
     return state;
