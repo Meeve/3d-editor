@@ -28,14 +28,21 @@ export default class Scroller extends React.Component {
     onMouseMove(event) {
         if(this.state.scrollBarMoving) {
             let scrollBarPosition = this.state.prevScrollBarPosition + (event.pageY - this.state.yMouseClick);
+            const marginAndBordersHeight = this.state.outerScrollerMargin * 2 + this.state.outerScrollerBorder * 2;
+            const maxValue = this.props.height - this.scroller.current.clientHeight - marginAndBordersHeight;
+
             if(scrollBarPosition < 0) 
                 scrollBarPosition = 0;
             
-            const marginAndBordersHeight = this.state.outerScrollerMargin * 2 + this.state.outerScrollerBorder * 2;
-            if(scrollBarPosition + this.scroller.current.clientHeight + marginAndBordersHeight > this.props.height)
-                scrollBarPosition = this.props.height - this.scroller.current.clientHeight - marginAndBordersHeight;
+            if(scrollBarPosition > maxValue)
+                scrollBarPosition = maxValue;
             
+            const prop = scrollBarPosition / maxValue;
+            const childGap = this.childHolder.current.clientHeight - this.props.height;
+            console.log(childGap);
+
             this.setState({
+                childOffsetTop: -(childGap * prop),
                 scrollBarPosition
             });
         }
@@ -66,12 +73,11 @@ export default class Scroller extends React.Component {
             childOffsetTop = 0;
 
         const prop = childOffsetTop / maxValue;
-        console.log(prop);
         const scrollGap = this.props.height - 6 - this.scroller.current.clientHeight;
-        console.log(this.props.height, this.scroller.current.clientHeight);
+
         this.setState({
             childOffsetTop,
-            scrollBarPosition: (scrollGap * prop) 
+            scrollBarPosition: scrollGap * prop
         });
     }
 
@@ -82,7 +88,6 @@ export default class Scroller extends React.Component {
     }
 
     render() {
-        console.log(this.props.height);
         let scrollerHandlerStyle = { height: 0 };
         let heightRatio = 0;
 
