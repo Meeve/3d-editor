@@ -6,8 +6,8 @@
   "repository": "git@github.com:Meeve/3d-editor.git",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "test": "react-scripts test --env=jsdom"
   },
   "author": "",
   "license": "ISC",
