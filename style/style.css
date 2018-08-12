@@ -43,7 +43,7 @@ body {
 
 .scrollerContainer {
     display: grid;
-    grid-template-columns: 1fr 35px; 
+    grid-template-columns: 1fr 15px; 
     overflow: hidden;
 }
 
