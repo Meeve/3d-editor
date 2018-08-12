@@ -50,7 +50,7 @@ class Scene extends Component {
                 </div>
             );
         }
-
+        
         return (
             <div className="col-md-6">
                 <div className="row">
