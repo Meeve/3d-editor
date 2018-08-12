@@ -15,6 +15,19 @@ export default class Scroller extends React.Component {
             outerScrollerMargin: 2,
             outerScrollerBorder: 1
         };
+
+        this.stopScrolling = this.stopScrolling.bind(this);
+        this.onMouseMove = this.onMouseMove.bind(this);
+    }
+
+    componentDidMount() {
+        document.body.addEventListener('mouseup', this.stopScrolling);
+        document.body.addEventListener('mousemove', this.onMouseMove);
+    }
+
+    componentWillUnmount() {
+        document.body.removeEventListener('mouseup', this.stopScrolling);
+        document.body.addEventListener('mousemove', this.onMouseMove);
     }
 
     startScrolling(event) {
@@ -39,8 +52,6 @@ export default class Scroller extends React.Component {
             
             const prop = scrollBarPosition / maxValue;
             const childGap = this.childHolder.current.clientHeight - this.props.height;
-            console.log(childGap);
-
             this.setState({
                 childOffsetTop: -(childGap * prop),
                 scrollBarPosition
@@ -102,7 +113,6 @@ export default class Scroller extends React.Component {
         return (
             <div style={{display: "grid", gridTemplateColumns: "1fr 15px", overflow: "hidden"}} 
                 onWheel={this.onScroll.bind(this)}
-                onMouseMove={this.onMouseMove.bind(this)}
                 onMouseUp={this.stopScrolling.bind(this)}>
 
                     <div style={{overflow: "hidden"}}>
