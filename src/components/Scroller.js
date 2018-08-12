@@ -45,16 +45,19 @@ export default class Scroller extends React.Component {
         this.setState({
             yMouseClick: event.pageY,
             scrollBarMoving: true,
-            prevScrollBarPosition: this.state.scrollBarPosition
+            prevScrollBarPosition: this.getScrollBarPosition()
         });
+    }
+
+    getBorderAndMarginSize() {
+        return this.state.outerScrollerMargin * 2 + this.state.outerScrollerBorder * 2;
     }
 
     onMouseMove(event) {
         if(this.state.scrollBarMoving) {
             let scrollBarPosition = this.state.prevScrollBarPosition + (event.pageY - this.state.yMouseClick);
             let { prevScrollBarPosition, yMouseClick } = this.state;
-            const marginAndBordersHeight = this.state.outerScrollerMargin * 2 + this.state.outerScrollerBorder * 2;
-            const maxValue = this.props.height - this.scroller.current.clientHeight - marginAndBordersHeight;
+            const maxValue = this.props.height - this.scroller.current.clientHeight - this.getBorderAndMarginSize();
 
             if(scrollBarPosition < 0) {
                 scrollBarPosition = 0;
@@ -73,7 +76,6 @@ export default class Scroller extends React.Component {
 
             this.setState({
                 childOffsetTop: -(childGap * prop),
-                scrollBarPosition,
                 prevScrollBarPosition,
                 yMouseClick
             });
@@ -96,12 +98,8 @@ export default class Scroller extends React.Component {
         if(childOffsetTop > 0)
             childOffsetTop = 0;
 
-        const prop = childOffsetTop / maxValue;
-        const scrollGap = this.props.height - 6 - this.scroller.current.clientHeight;
-
         this.setState({
-            childOffsetTop,
-            scrollBarPosition: scrollGap * prop
+            childOffsetTop
         });
     }
 
@@ -111,12 +109,21 @@ export default class Scroller extends React.Component {
 
     getScrollBarPosition() {
         const maxValue = -(this.state.childHeight - this.props.height);
-
         const proportion = this.state.childOffsetTop / maxValue;
-
-        const scrollGap = this.scroller.current ? this.props.height - 6 - this.scroller.current.clientHeight : 0;
+        const scrollGap = this.scroller.current ? this.props.height - this.getBorderAndMarginSize() - this.scroller.current.clientHeight : 0;
 
         return scrollGap * proportion;
+    }
+
+    scrollDownIfHasExtraSpace() {
+        if(this.childHolder.current) {
+            const extraSpace = this.props.height - (this.childHolder.current.clientHeight + this.state.childOffsetTop); 
+            if(extraSpace > 0 && this.state.childOffsetTop < 0) {
+                this.setState({
+                    childOffsetTop: this.state.childOffsetTop + extraSpace
+                });
+            }
+        }
     }
 
     getChildHolderStyle() {
@@ -141,13 +148,7 @@ export default class Scroller extends React.Component {
     }
 
     render() {
-        if(this.childHolder.current) {
-            const extraSpace = this.props.height - (this.childHolder.current.clientHeight + this.state.childOffsetTop); 
-            if(extraSpace > 0 && this.state.childOffsetTop < 0)
-                this.setState({
-                    childOffsetTop: this.state.childOffsetTop + extraSpace
-                });
-        }
+        this.scrollDownIfHasExtraSpace();
 
         return (
             <div className="scrollerContainer" 
@@ -167,7 +168,7 @@ export default class Scroller extends React.Component {
                             onMouseDown={this.startScrolling.bind(this)}>
                         </div>
                     </div>
-                    
+
             </div>
         );
     }

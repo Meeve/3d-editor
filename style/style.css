@@ -42,9 +42,9 @@ body {
 }
 
 .scrollerContainer {
-    display: "grid";
-    grid-template-columns: "1fr 15px"; 
-    overflow: "hidden";
+    display: grid;
+    grid-template-columns: 1fr 35px; 
+    overflow: hidden;
 }
 
 .scrollerOuter {
@@ -59,7 +59,7 @@ body {
 }
 
 .childHolderWrapper {
-    overflow: "hidden";
+    overflow: hidden;
 }
 
 .childHolder { 
