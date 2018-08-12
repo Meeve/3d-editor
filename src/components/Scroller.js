@@ -43,18 +43,28 @@ export default class Scroller extends React.Component {
             let scrollBarPosition = this.state.prevScrollBarPosition + (event.pageY - this.state.yMouseClick);
             const marginAndBordersHeight = this.state.outerScrollerMargin * 2 + this.state.outerScrollerBorder * 2;
             const maxValue = this.props.height - this.scroller.current.clientHeight - marginAndBordersHeight;
+            let { prevScrollBarPosition, yMouseClick } = this.state;
 
-            if(scrollBarPosition < 0) 
+            if(scrollBarPosition < 0) {
                 scrollBarPosition = 0;
+                prevScrollBarPosition = 0;
+                yMouseClick = event.pageY;
+            }
             
-            if(scrollBarPosition > maxValue)
+            if(scrollBarPosition > maxValue) {
                 scrollBarPosition = maxValue;
+                prevScrollBarPosition = maxValue;
+                yMouseClick = event.pageY;
+            }
             
             const prop = scrollBarPosition / maxValue;
             const childGap = this.childHolder.current.clientHeight - this.props.height;
+
             this.setState({
                 childOffsetTop: -(childGap * prop),
-                scrollBarPosition
+                scrollBarPosition,
+                prevScrollBarPosition,
+                yMouseClick
             });
         }
     }
