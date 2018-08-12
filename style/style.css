@@ -41,6 +41,12 @@ body {
     background-color: green;
 }
 
+.scrollerContainer {
+    display: "grid";
+    grid-template-columns: "1fr 15px"; 
+    overflow: "hidden";
+}
+
 .scrollerOuter {
     background-color: rgb(91, 91, 91);
     border-radius: 10px;
@@ -52,6 +58,10 @@ body {
     cursor: pointer;
 }
 
-.childHolderStyle { 
+.childHolderWrapper {
+    overflow: "hidden";
+}
+
+.childHolder { 
     transition: 0.2s;
 }

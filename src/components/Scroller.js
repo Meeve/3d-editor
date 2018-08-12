@@ -150,21 +150,24 @@ export default class Scroller extends React.Component {
         }
 
         return (
-            <div style={{display: "grid", gridTemplateColumns: "1fr 15px", overflow: "hidden"}} 
+            <div className="scrollerContainer" 
                 onWheel={this.onScroll.bind(this)}
                 onMouseUp={this.stopScrolling.bind(this)}>
 
-                    <div style={{overflow: "hidden"}}>
-                        <div className="childHolderStyle" ref={this.childHolder} style={this.getChildHolderStyle()} >
+                    <div className="childHolderWrapper">
+                        <div className="childHolder" ref={this.childHolder} style={this.getChildHolderStyle()} >
                             { this.props.children }
                         </div>
                     </div>
+
                     <div className="scrollerOuter" style={this.getScrollerOuterStyle()}>
                         <div ref={this.scroller} 
                             className="scrollerHandler" 
                             style={this.getScrollerHandlerStyle()} 
-                            onMouseDown={this.startScrolling.bind(this)}></div>
+                            onMouseDown={this.startScrolling.bind(this)}>
+                        </div>
                     </div>
+                    
             </div>
         );
     }
