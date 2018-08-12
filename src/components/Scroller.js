@@ -109,9 +109,19 @@ export default class Scroller extends React.Component {
         return this.props.height / this.state.childHeight;
     }
 
+    getScrollBarPosition() {
+        const maxValue = -(this.state.childHeight - this.props.height);
+
+        const proportion = this.state.childOffsetTop / maxValue;
+
+        const scrollGap = this.scroller.current ? this.props.height - 6 - this.scroller.current.clientHeight : 0;
+
+        return scrollGap * proportion;
+    }
+
     getChildHolderStyle() {
         return {
-            transform: `translateY(${this.state.childOffsetTop}px)`
+            transform: `translateY(${parseInt(this.state.childOffsetTop)}px)`
         };
     }
     
@@ -126,11 +136,19 @@ export default class Scroller extends React.Component {
     getScrollerHandlerStyle() {
         return {
             height: (this.getHeightRatio() * 100) + "%",
-            transform: `translateY(${this.state.scrollBarPosition}px)`
+            transform: `translateY(${this.getScrollBarPosition()}px)`
         };
     }
 
     render() {
+        if(this.childHolder.current) {
+            const extraSpace = this.props.height - (this.childHolder.current.clientHeight + this.state.childOffsetTop); 
+            if(extraSpace > 0 && this.state.childOffsetTop < 0)
+                this.setState({
+                    childOffsetTop: this.state.childOffsetTop + extraSpace
+                });
+        }
+
         return (
             <div style={{display: "grid", gridTemplateColumns: "1fr 15px", overflow: "hidden"}} 
                 onWheel={this.onScroll.bind(this)}
