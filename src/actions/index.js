@@ -131,8 +131,6 @@ export function transformRowSizesBetweenSiblings(yOffset) {
         yOffset
     }
 }
-<<<<<<< HEAD
-=======
 
 export function transformColumnSizesBetweenSiblings(xOffset) {
     return {
@@ -146,4 +144,3 @@ export function stopResizing() {
         type: STOP_RESIZING
     }
 }
->>>>>>> AppComponentRefactoring
