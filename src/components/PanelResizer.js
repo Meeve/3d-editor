@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ViewSelector from "./viewSelector";
+import ViewSelector from "./ViewSelector";
 import PanelManipulator from './PanelManipulator';
 import * as actions from '../actions/index';
 
@@ -12,7 +12,8 @@ class PanelResizer extends React.Component {
 
         this.state = {
             isUpDownResizing: false,
-            isLeftRightResizing: false
+            isLeftRightResizing: false,
+            borderSize: 3
         };
     }
 
@@ -67,13 +68,23 @@ class PanelResizer extends React.Component {
                  onMouseDown={this.diagonallyResize.bind(this, rowCounter, colCounter)}></div> : <div></div>;
     }
 
+    getComponentToRender(el) {
+        let componentWidth = _.sum(this.props.panelLayout.columnSizes.slice(el.colStart - 1, el.colEnd - 1));
+        let componentHeight = _.sum(this.props.panelLayout.rowSizes.slice(el.rowStart - 1, el.rowEnd - 1));
+        
+        return <el.element 
+            componentWidth={ componentWidth - this.state.borderSize }
+            componentHeight={ componentHeight - this.state.borderSize }
+        />
+    }
+
     getElementWithResizers(el) {
         const colCounter = el.colEnd - 2;
         const rowCounter = el.rowEnd - 2;
         
         return (
             <React.Fragment>
-                {el.element}
+                {this.getComponentToRender(el)}
                 {this.getLeftResizer(colCounter)}
                 {this.getBottomResizer(rowCounter)}
                 {this.getDiagonalResizer(colCounter, rowCounter)}
@@ -84,7 +95,9 @@ class PanelResizer extends React.Component {
     getResizerStyle(el) {
         return {
             gridColumn: `${el.colStart} / ${el.colEnd}`,
-            gridRow: `${el.rowStart} / ${el.rowEnd}`
+            gridRow: `${el.rowStart} / ${el.rowEnd}`,
+            gridTemplateColumns: `1fr ${this.state.borderSize}px`,
+            gridTemplateRows: `1fr ${this.state.borderSize}px`
         };
     }
 
@@ -110,7 +123,7 @@ class PanelResizer extends React.Component {
 
     render() {
         const resizerBoxes = _.map(this.props.panelLayout.components, (el, key) => this.createResizeBox(el, key));
-        
+
         return (
             <div className="app" onMouseMove={this.appResize.bind(this)} onMouseUp={this.stopResizing.bind(this)}
                  style={this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)}>
