@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Canvas from './canvas.js';
 import Scene from './scene.js';
+import Timeline from './Timeline';
 import Scroller from "./Scroller";
 
 export default class ViewSelector extends Component {
@@ -22,6 +23,10 @@ export default class ViewSelector extends Component {
                         </Scroller>);
                     }
                 },
+                Timeline: {
+                    name: "Timeline",
+                    getElement: () => <Timeline />
+                }
             },
             selectedView: "Canvas"
         };
