@@ -76,13 +76,43 @@ body {
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
+    height: 90%;
     width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    z-index: 10;
+}
+
+.outer-strip {
+    width: 25px;
     display: flex;
 }
 
-.strip {
+.inner-strip {
     border-left: 1px solid rgb(55, 55, 55);
+    margin: auto;
+    height: 100%;
+    justify-content: center;
+}
+
+.strip-values {
+    position: absolute;
+    height: 10%;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px solid rgb(65, 65, 65);
+    border-bottom: 1px solid rgb(65, 65, 65);
+    background-color: rgb(137, 137, 137);
+    align-items: center;
+}
+
+.strip-values span {
+    width: 25px;
+    text-align: center;
 }
 
 .timeline {
