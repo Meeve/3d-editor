@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import Canvas from './canvas.js';
 import Scene from './scene.js';
-<<<<<<< HEAD
 import Dropdown from "./dropdown/Dropdown";
-=======
 import Scroller from "./Scroller";
->>>>>>> master
 
 export default class ViewSelector extends Component {
     constructor(props) {
@@ -40,15 +37,10 @@ export default class ViewSelector extends Component {
     render() {
         let viewList = _.map(this.state.views, (view, key) => <option key={key}> {view.name} </option>);
 
-<<<<<<< HEAD
         if (this.state.selectedView.element != null) {
             currentView = <this.state.selectedView.element/>;
         }
         
-=======
-        const currentView = this.state.views[this.state.selectedView].getElement();
-
->>>>>>> master
         return (
             <div style={{display: "grid", gridTemplateRows: "1fr 25px", overflow: "hidden"}}>
                 {currentView}

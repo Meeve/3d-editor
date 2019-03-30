@@ -25,11 +25,6 @@ let lastId = 1;
 
 function addMesh(mesh, state, defaultName) {
     mesh.id = lastId++;
-<<<<<<< HEAD
-
-=======
-    mesh.name = defaultName;
->>>>>>> master
     return {
         [mesh.id]: mesh,
         ...state
