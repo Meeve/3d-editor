@@ -15,8 +15,6 @@ body {
 
 .resizerBox {
     display: grid;
-    grid-template-columns: 1fr 5px;
-    grid-template-rows: auto 5px;
     overflow: hidden;
     position: relative;
 }
@@ -94,4 +92,31 @@ body {
 .dropdownEventCatcher {
     background: rgba(0, 0, 0, 0);
     position: absolute;
+}
+
+/* SCROLLER  */
+
+.scrollerContainer {
+    display: grid;
+    grid-template-columns: 1fr 15px; 
+    overflow: hidden;
+}
+
+.scrollerOuter {
+    background-color: rgb(91, 91, 91);
+    border-radius: 10px;
+}
+
+.scrollerHandler {
+    background-color: rgb(140, 140, 140);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.childHolderWrapper {
+    overflow: hidden;
+}
+
+.childHolder { 
+    transition: 0.2s;
 }

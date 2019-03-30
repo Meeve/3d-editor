@@ -1,35 +1,54 @@
 import React, {Component} from 'react';
 import Canvas from './canvas.js';
 import Scene from './scene.js';
+<<<<<<< HEAD
 import Dropdown from "./dropdown/Dropdown";
+=======
+import Scroller from "./Scroller";
+>>>>>>> master
 
 export default class ViewSelector extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            menuBarHeight: 25,
             views: {
-                Canvas: {name: "Canvas", element: Canvas},
-                Scene: {name: "Scene", element: Scene}
+                Canvas: {
+                    name: "Canvas", 
+                    getElement: () => <Canvas/>
+                },
+                Scene: {
+                    name: "Scene",
+                    getElement: () => {
+                        return (<Scroller height={ this.props.componentHeight - this.state.menuBarHeight } >
+                            <Scene /> 
+                        </Scroller>);
+                    }
+                },
             },
-            selectedView: {name: "", element: Canvas}
+            selectedView: "Canvas"
         };
     }
 
     viewChanged(event) {
         this.setState({
-            selectedView: this.state.views[event.target.value]
+            selectedView: event.target.value
         });
     }
 
     render() {
         let viewList = _.map(this.state.views, (view, key) => <option key={key}> {view.name} </option>);
-        let currentView = "";
 
+<<<<<<< HEAD
         if (this.state.selectedView.element != null) {
             currentView = <this.state.selectedView.element/>;
         }
         
+=======
+        const currentView = this.state.views[this.state.selectedView].getElement();
+
+>>>>>>> master
         return (
             <div style={{display: "grid", gridTemplateRows: "1fr 25px", overflow: "hidden"}}>
                 {currentView}
