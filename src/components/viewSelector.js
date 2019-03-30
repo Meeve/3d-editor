@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Canvas from './canvas.js';
 import Scene from './scene.js';
-import DropdownMenuShower from "./DropdownMenuShower";
+import Dropdown from "./dropdown/Dropdown";
 
 export default class ViewSelector extends Component {
     constructor(props) {
@@ -29,39 +29,38 @@ export default class ViewSelector extends Component {
         if (this.state.selectedView.element != null) {
             currentView = <this.state.selectedView.element/>;
         }
-
+        
         return (
             <div style={{display: "grid", gridTemplateRows: "1fr 25px", overflow: "hidden"}}>
                 {currentView}
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <select value={this.state.selectedView.name} onChange={this.viewChanged.bind(this)}>
                         {viewList}
-                    </select> 
-                    <DropdownMenuShower text="View">
-
-                    </DropdownMenuShower>
-                    <DropdownMenuShower text="Add" actionList={[
-                        {
-                            text: "Mesh",
-                            actionList: [
-                                { text: "Cube", action: () => console.log(1)},
-                                { text: "Icosahedron", action: () => console.log(2)},
-                                { text: "Plane", action: () => console.log(3)},
-                                { text: "Pyramid", action: () => console.log(4)}
-                            ]
-                        },{
-                            text: "xxx",
-                            actionList: [
-                                { text: "xxz", action: () => console.log(1)},
-                                { text: "vcx", action: () => console.log(2)},
-                                { text: "bvc", action: () => console.log(3)},
-                                { text: "fd", action: () => console.log(4)},
-                                { text: "fd", action: () => console.log(5)}
-                            ]
-                        },
-                    ]}>
-
-                    </DropdownMenuShower>
+                    </select>
+                    <Dropdown content="outer" openAction="click">
+                        <Dropdown content="inner" direction="right">
+                            <Dropdown content="inner" direction="right">
+                                <Dropdown content="inner" direction="right">
+                                    <Dropdown content="inner" direction="right">
+                                        
+                                    </Dropdown>
+                                    <Dropdown content="inner" direction="right">
+                                        
+                                    </Dropdown>
+                                    <Dropdown content="inner" direction="right">
+                                        
+                                    </Dropdown>
+                                </Dropdown>
+                            <span>DUPA</span>
+                            <span>saddsa</span>
+                            <span>DUPA</span>
+                            <span>saddsa</span>
+                            </Dropdown>
+                            <span>DUPA</span>
+                            <span>saddsa</span>
+                        </Dropdown>
+                        DUPA
+                    </Dropdown>
                 </div>
             </div>
         );

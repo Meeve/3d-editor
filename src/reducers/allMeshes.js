@@ -25,7 +25,7 @@ let lastId = 1;
 
 function addMesh(mesh, state, defaultName) {
     mesh.id = lastId++;
-    mesh.name = prompt(`Type your new mesh #${mesh.id} name:`, defaultName);
+
     return {
         [mesh.id]: mesh,
         ...state
