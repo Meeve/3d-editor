@@ -98,14 +98,13 @@ export default class Dropdown extends React.Component {
     }
 
     getExpandedDropdown = () => {
-        let expandedDropDown = "";
         if (this.state.isOpened) {
-            expandedDropDown = (<div className="dropDownOptionHolder" style={this.getPositionStylesForExpander()} ref={this.state.dropdownRef}>
+            return (<div className="dropDownOptionHolder" style={this.getPositionStylesForExpander()} ref={this.state.dropdownRef}>
                 {this.getWrapChildren()}
             </div>);
         }
 
-        return expandedDropDown;
+        return "";
     } 
 
     getStylesForEventCatcher = () => {
