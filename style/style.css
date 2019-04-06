@@ -10,7 +10,7 @@ body {
     display: grid;
     grid-template-columns: 640px 640px 640px;
     grid-template-rows: 474px 473px;
-    user-select: none; 
+    user-select: none;
 }
 
 .resizerBox {
@@ -20,8 +20,8 @@ body {
 }
 
 .leftResizer {
-     cursor: e-resize;
-     background-color: red;
+    cursor: e-resize;
+    background-color: red;
 }
 
 .bottomResizer {
@@ -50,6 +50,7 @@ body {
 }
 
 .dropdownContent {
+    padding: 4px;
     border-radius: 3px;
     border: none;
     background-color: rgba(0, 0, 0, 0);
@@ -60,14 +61,13 @@ body {
 }
 
 .dropDownOptionHolder {
-    background-color: rgba(0,0,0,0.70);
+    background-color: rgba(0, 0, 0, 0.70);
     border-radius: 5px;
     position: absolute;
     z-index: 1000;
 }
 
 .dropdownMenuAction {
-    width: 100%;
     background-color: rgba(0, 0, 0, 0);
     color: white;
     border: none;
@@ -94,11 +94,19 @@ body {
     position: absolute;
 }
 
+.dropdownButton {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    padding: 5px;
+    white-space: nowrap;
+}
+
 /* SCROLLER  */
 
 .scrollerContainer {
     display: grid;
-    grid-template-columns: 1fr 15px; 
+    grid-template-columns: 1fr 15px;
     overflow: hidden;
 }
 
@@ -117,6 +125,6 @@ body {
     overflow: hidden;
 }
 
-.childHolder { 
+.childHolder {
     transition: 0.2s;
 }
