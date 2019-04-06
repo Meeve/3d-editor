@@ -2,6 +2,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: #727272;
+    font-family: "Segoe UI";
+    font-size: 13px;
 }
 
 .app {
@@ -40,6 +42,59 @@ body {
     height: 10px;
     background-color: green;
 }
+
+/* DROPDOWN */
+
+.dropdown {
+    position: relative;
+}
+
+.dropdownContent {
+    border-radius: 3px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.dropdownContent:hover {
+    background-color: rgb(86, 127, 193);
+}
+
+.dropDownOptionHolder {
+    background-color: rgba(0,0,0,0.70);
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1000;
+}
+
+.dropdownMenuAction {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: none;
+}
+
+.dropdownMenuAction:hover {
+    background-image: linear-gradient(rgb(122, 163, 229), rgb(86, 128, 193));
+}
+
+.dropdownMenuAction:first-child {
+    border-radius: 3px 3px 0 0;
+}
+
+.dropdownMenuAction:last-child {
+    border-radius: 0 0 3px 3px;
+}
+
+.dropdownMenuAction:only-child {
+    border-radius: 3px 3px 3px 3px;
+}
+
+.dropdownEventCatcher {
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+}
+
+/* SCROLLER  */
 
 .scrollerContainer {
     display: grid;
