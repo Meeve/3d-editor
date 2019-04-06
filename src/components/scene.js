@@ -16,18 +16,8 @@ class Scene extends Component {
         this.props.addIcosa();
     }
 
-    scaleChange(event) {
-        this.setState({
-            scale: event.target.value
-        });
-
-        this.props.changeScale(event.target.value);
-    }
-
-    changeProp(prop, e) {
-        if (!isNaN(e.target.value)) {
-            this.props.changeMeshProp(this.props.selectedMesh.id, prop, parseInt(e.target.value));
-        }
+    changeProp = (prop, value) => {
+        this.props.changeMeshProp(this.props.selectedMesh.id, prop, value);
     }
 
     render() {
@@ -37,15 +27,15 @@ class Scene extends Component {
                 <div>
                     <div className="row">
                         <h2>Location</h2>
-                        <NumberField prop="x" label="Move X"/>
-                        <NumberField prop="y" label="Move Y"/>
-                        <NumberField prop="z" label="Move Z"/>
+                        <NumberField onChange={(value) => this.changeProp("x", value)} value={this.props.selectedMesh.x} label="Move X"/>
+                        <NumberField onChange={(value) => this.changeProp("y", value)} value={this.props.selectedMesh.y} label="Move Y"/>
+                        <NumberField onChange={(value) => this.changeProp("z", value)} value={this.props.selectedMesh.z} label="Move Z"/>
                     </div>
                     <div className="row">
                         <h2>Rotation</h2>
-                        <NumberField prop="rx" label="X Axis"/>
-                        <NumberField prop="ry" label="Y Axis"/>
-                        <NumberField prop="rz" label="Z Axis"/>
+                        <NumberField onChange={(value) => this.changeProp("rx", value)} value={this.props.selectedMesh.rx} label="X Axis"/>
+                        <NumberField onChange={(value) => this.changeProp("ry", value)} value={this.props.selectedMesh.ry} label="Y Axis"/>
+                        <NumberField onChange={(value) => this.changeProp("rz", value)} value={this.props.selectedMesh.rz} label="Z Axis"/>
                     </div>
                 </div>
             );

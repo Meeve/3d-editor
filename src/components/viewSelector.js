@@ -36,10 +36,7 @@ export default class ViewSelector extends Component {
 
     render() {
         let viewList = _.map(this.state.views, (view, key) => <option key={key}> {view.name} </option>);
-
-        if (this.state.selectedView.element != null) {
-            currentView = <this.state.selectedView.element/>;
-        }
+        const currentView = this.state.views[this.state.selectedView].getElement()
         
         return (
             <div style={{display: "grid", gridTemplateRows: "1fr 25px", overflow: "hidden"}}>

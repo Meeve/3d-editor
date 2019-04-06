@@ -1,47 +1,72 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {changeScale, addCube, selectMesh, changeMeshProp} from '../actions/index.js';
+import _ from 'lodash';
 
-class NumberField extends Component {
+export default class NumberField extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            prop: props.prop,
-            value: props.selectedMesh[props.prop]
+            value: props.value
         };
+        
+        this.handleMouseMoveEvent = _.throttle(this.handleMouseMoveEvent, 20);
+    }
 
-        window.addEventListener('mouseup', () => {
-            this.setState({
-                mouseDown: false
-            });
-        });
+    componentWillUnmount() {
+        this.clearWindowEvents();
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            value: nextProps.selectedMesh[this.props.prop]
+            value: nextProps.value
         });
     }
 
-    changeProp(e) {
+    changeProp = (e) => {
         this.setState({
             value: e.target.value
         });
 
         if (!isNaN(e.target.value) && e.target.value !== "") {
-            this.props.changeMeshProp(this.props.selectedMesh.id, this.props.prop, parseInt(e.target.value));
+            this.props.onChange(parseInt(e.target.value));
         }
     }
 
-    mouseMove(e) {
-        if (this.state.mouseDown && this.state.isMouseIn) {
-            let offset = this.state.prevValue + (+e.pageX - this.state.clickedX) / 20;
-            this.setState({
-                value: offset
-            });
-            this.props.changeMeshProp(this.props.selectedMesh.id, this.props.prop, offset);
-        }
+    appendMouseMoveListener = () => {
+        window.addEventListener('mousemove', this.handleMouseMoveEvent);
+    }
+
+    handleMouseMoveEvent = (e) => {
+        let offset = this.state.prevValue + (+e.pageX - this.state.clickedX) / 20;
+        this.setState({
+            value: offset
+        });
+        this.props.onChange(offset);
+    }
+    
+
+    appendMouseUpListener = () => {
+        window.addEventListener('mouseup', this.handleMouseUpEvent);
+    }
+
+    handleMouseUpEvent = (e) => {
+        this.setState({
+            mouseDown: false
+        });
+        this.clearWindowEvents();
+    }
+
+    mouseDown = (e) => {
+        this.appendMouseMoveListener();
+        this.appendMouseUpListener();
+        this.setState({ 
+            clickedX: e.pageX,
+            prevValue: parseInt(this.state.value)
+        });
+    }
+
+    clearWindowEvents = () => {
+        window.removeEventListener('mousemove', this.handleMouseMoveEvent);
+        window.removeEventListener('mouseup', this.state.mouseUpEvent);
     }
 
     render() {
@@ -51,29 +76,11 @@ class NumberField extends Component {
                     {this.props.label}:
                 </label>
                 <input
-                    onMouseDown={e => {
-                        this.setState({mouseDown: true, clickedX: e.pageX, prevValue: parseInt(this.state.value)});
-                    }}
-                    onMouseMove={this.mouseMove.bind(this)}
-                    onMouseLeave={e => this.setState({isMouseIn: false})}
-                    onMouseEnter={e => this.setState({isMouseIn: true})}
-                    onChange={this.changeProp.bind(this)}
+                    onMouseDown={this.mouseDown}
+                    onChange={this.changeProp}
                     value={this.state.value}
                     type="number"/>
             </div>
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        selectedMesh: state.selectedMesh
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({changeMeshProp}, dispatch);
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(NumberField);
