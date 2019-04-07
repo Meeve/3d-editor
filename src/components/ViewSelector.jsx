@@ -53,7 +53,7 @@ export default class ViewSelector extends Component {
                overflow: 'hidden'
             }}>
             {currentView.getElement()}
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="viewSelectorStrip">
                <Dropdown content={currentView.name} openAction="click">
                   {viewList}
                </Dropdown>

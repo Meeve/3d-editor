@@ -56,7 +56,11 @@ class PanelResizer extends React.Component {
       return this.isLastColumn(colCounter) ? (
          <div />
       ) : (
-         <div className="leftResizer" onMouseDown={this.leftResize.bind(this, colCounter)} />
+         <div className="leftResizerEventCatcher" onMouseDown={this.leftResize.bind(this, colCounter)}>
+            <div className="greyBackground">
+               <div class="visibleResizer" />
+            </div>
+         </div>
       );
    }
 
@@ -64,13 +68,23 @@ class PanelResizer extends React.Component {
       return this.isLastRow(rowCounter) ? (
          <div />
       ) : (
-         <div className="bottomResizer" onMouseDown={this.bottomResize.bind(this, rowCounter)} />
+         <div className="bottomResizerEventCatcher" onMouseDown={this.bottomResize.bind(this, rowCounter)}>
+            <div className="greyBackground">
+               <div class="visibleResizer" />
+            </div>
+         </div>
       );
    }
 
    getDiagonalResizer(colCounter, rowCounter) {
       return !this.isLastColumn(colCounter) && !this.isLastRow(rowCounter) ? (
-         <div className="diagonalResizer" onMouseDown={this.diagonallyResize.bind(this, rowCounter, colCounter)} />
+         <div
+            className="diagonalResizerEventCatcher"
+            onMouseDown={this.diagonallyResize.bind(this, rowCounter, colCounter)}>
+            <div className="greyBackground">
+               <div class="visibleResizer" />
+            </div>
+         </div>
       ) : (
          <div />
       );
@@ -139,8 +153,7 @@ class PanelResizer extends React.Component {
             className="app"
             onMouseMove={this.appResize.bind(this)}
             onMouseUp={this.stopResizing.bind(this)}
-            style={this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)}
-         >
+            style={this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)}>
             {resizerBoxes}
          </div>
       );
@@ -153,4 +166,7 @@ function mapStateToProps(state) {
    };
 }
 
-export default connect(mapStateToProps, actions)(PanelResizer);
+export default connect(
+   mapStateToProps,
+   actions
+)(PanelResizer);

@@ -1,130 +1,177 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #727272;
-    font-family: "Segoe UI";
-    font-size: 13px;
+   margin: 0;
+   padding: 0;
+   background-color: #727272;
+   font-family: 'Segoe UI';
+   font-size: 13px;
 }
 
 .app {
-    display: grid;
-    grid-template-columns: 640px 640px 640px;
-    grid-template-rows: 474px 473px;
-    user-select: none;
+   display: grid;
+   grid-template-columns: 640px 640px 640px;
+   grid-template-rows: 474px 473px;
+   user-select: none;
 }
 
 .resizerBox {
-    display: grid;
-    overflow: hidden;
-    position: relative;
+   display: grid;
+   overflow: hidden;
+   position: relative;
 }
 
-.leftResizer {
-    cursor: e-resize;
-    background-color: red;
+.greyBackground {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   background-color: rgb(50, 50, 50);
 }
 
-.bottomResizer {
-    cursor: n-resize;
-    background-color: red;
+.leftResizerEventCatcher {
+   cursor: e-resize;
 }
 
-.diagonalResizer {
-    cursor: nw-resize;
-    background-color: red;
+.leftResizerEventCatcher .greyBackground {
+   justify-content: flex-end;
+}
+
+.leftResizerEventCatcher .visibleResizer {
+   width: 1px;
+   background-color: black;
+   height: 100%;
+}
+
+.bottomResizerEventCatcher {
+   cursor: n-resize;
+}
+
+.bottomResizerEventCatcher .greyBackground {
+   justify-content: flex-start;
+   flex-direction: column;
+}
+
+.bottomResizerEventCatcher .visibleResizer {
+   width: 100%;
+   background-color: black;
+   height: 1px;
+}
+
+.bottomResizerEventCatcher .visibleResizer {
+   width: 100%;
+   background-color: black;
+   height: 1px;
+}
+
+.diagonalResizerEventCatcher {
+   cursor: nw-resize;
+}
+
+.diagonalResizerEventCatcher .visibleResizer {
+   width: 100%;
+   background-color: black;
+   height: 1px;
 }
 
 .multiplayer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    background-color: green;
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 10px;
+   height: 10px;
+   background-color: green;
 }
 
 /* DROPDOWN */
 
 .dropdown {
-    position: relative;
+   position: relative;
 }
 
 .dropdownContent {
-    padding: 4px;
-    border-radius: 3px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
+   padding: 4px;
+   border-radius: 3px;
+   border: none;
+   background-color: rgba(0, 0, 0, 0);
 }
 
 .dropdownContent:hover {
-    background-color: rgb(86, 127, 193);
+   background-color: rgb(86, 127, 193);
 }
 
 .dropDownOptionHolder {
-    background-color: rgba(0, 0, 0, 0.70);
-    border-radius: 5px;
-    position: absolute;
-    z-index: 1000;
+   background-color: rgba(0, 0, 0, 0.7);
+   border-radius: 5px;
+   position: absolute;
+   z-index: 1000;
 }
 
 .dropdownMenuAction {
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-    border: none;
+   background-color: rgba(0, 0, 0, 0);
+   color: white;
+   border: none;
 }
 
 .dropdownMenuAction:hover {
-    background-image: linear-gradient(rgb(122, 163, 229), rgb(86, 128, 193));
+   background-image: linear-gradient(rgb(122, 163, 229), rgb(86, 128, 193));
 }
 
 .dropdownMenuAction:first-child {
-    border-radius: 3px 3px 0 0;
+   border-radius: 3px 3px 0 0;
 }
 
 .dropdownMenuAction:last-child {
-    border-radius: 0 0 3px 3px;
+   border-radius: 0 0 3px 3px;
 }
 
 .dropdownMenuAction:only-child {
-    border-radius: 3px 3px 3px 3px;
+   border-radius: 3px 3px 3px 3px;
 }
 
 .dropdownEventCatcher {
-    background: rgba(0, 0, 0, 0);
-    position: absolute;
+   background: rgba(0, 0, 0, 0);
+   position: absolute;
 }
 
 .dropdownButton {
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-    padding: 5px;
-    white-space: nowrap;
+   border: none;
+   background-color: rgba(0, 0, 0, 0);
+   color: white;
+   padding: 5px;
+   white-space: nowrap;
 }
 
 /* SCROLLER  */
 
 .scrollerContainer {
-    display: grid;
-    grid-template-columns: 1fr 15px;
-    overflow: hidden;
+   display: grid;
+   grid-template-columns: 1fr 15px;
+   overflow: hidden;
 }
 
 .scrollerOuter {
-    background-color: rgb(91, 91, 91);
-    border-radius: 10px;
+   background-color: rgb(91, 91, 91);
+   border-radius: 10px;
 }
 
 .scrollerHandler {
-    background-color: rgb(140, 140, 140);
-    border-radius: 10px;
-    cursor: pointer;
+   background-color: rgb(140, 140, 140);
+   border-radius: 10px;
+   cursor: pointer;
 }
 
 .childHolderWrapper {
-    overflow: hidden;
+   overflow: hidden;
 }
 
 .childHolder {
-    transition: 0.2s;
+   transition: 0.2s;
+}
+
+/* view selector */
+
+.viewSelectorStrip {
+   display: flex;
+   align-items: center;
+   border-top: 1px solid rgb(131, 131, 131);
+   border-bottom: 1px solid rgb(101, 101, 101);
+   background-color: rgb(114, 114, 114);
 }
