@@ -4,6 +4,7 @@ import Scene from './Scene';
 import Scroller from './Scroller';
 import AddDropdown from '../views/Dropdowns/AddDropdown';
 import Dropdown from './dropdown/Dropdown';
+import Timeline from './Timeline';
 
 export default class ViewSelector extends Component {
    constructor(props) {

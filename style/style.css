@@ -174,14 +174,10 @@ body {
 
 .timeline-background {
    background-color: rgb(68, 68, 68);
-   position: relative;
 }
 
 .stripes {
-   position: absolute;
-   left: 0;
-   top: 0;
-   height: 90%;
+   height: calc(100% - 15px);
    width: 100%;
    display: flex;
    justify-content: space-evenly;
@@ -201,12 +197,8 @@ body {
 }
 
 .strip-values {
-   position: absolute;
-   height: 10%;
+   height: 15px;
    width: 100%;
-   left: 0;
-   bottom: 0;
-   z-index: 10;
    display: flex;
    justify-content: space-evenly;
    border-top: 1px solid rgb(65, 65, 65);
