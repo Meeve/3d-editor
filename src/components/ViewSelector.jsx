@@ -4,6 +4,8 @@ import Scene from './Scene';
 import Scroller from './Scroller';
 import AddDropdown from '../views/Dropdowns/AddDropdown';
 import Dropdown from './dropdown/Dropdown';
+import Timeline from './Timeline';
+import Info from './Info';
 
 export default class ViewSelector extends Component {
    constructor(props) {
@@ -25,9 +27,23 @@ export default class ViewSelector extends Component {
                      </Scroller>
                   );
                }
+            },
+            Timeline: {
+               name: 'Timeline',
+               getElement: () => <Timeline />
+            },
+            Info: {
+               name: 'Info',
+               getElement: () => {
+                  return (
+                     <Scroller height={this.props.componentHeight - this.state.menuBarHeight}>
+                        <Info />
+                     </Scroller>
+                  );
+               }
             }
          },
-         selectedView: 'Canvas'
+         selectedView: this.props.elementProperties ? this.props.elementProperties.selectedView : 'Canvas'
       };
    }
 

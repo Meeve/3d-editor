@@ -58,7 +58,7 @@ class PanelResizer extends React.Component {
       ) : (
          <div className="leftResizerEventCatcher" onMouseDown={this.leftResize.bind(this, colCounter)}>
             <div className="greyBackground">
-               <div class="visibleResizer" />
+               <div className="visibleResizer" />
             </div>
          </div>
       );
@@ -70,7 +70,7 @@ class PanelResizer extends React.Component {
       ) : (
          <div className="bottomResizerEventCatcher" onMouseDown={this.bottomResize.bind(this, rowCounter)}>
             <div className="greyBackground">
-               <div class="visibleResizer" />
+               <div className="visibleResizer" />
             </div>
          </div>
       );
@@ -82,7 +82,7 @@ class PanelResizer extends React.Component {
             className="diagonalResizerEventCatcher"
             onMouseDown={this.diagonallyResize.bind(this, rowCounter, colCounter)}>
             <div className="greyBackground">
-               <div class="visibleResizer" />
+               <div className="visibleResizer" />
             </div>
          </div>
       ) : (
@@ -98,6 +98,7 @@ class PanelResizer extends React.Component {
          <el.element
             componentWidth={componentWidth - this.state.borderSize}
             componentHeight={componentHeight - this.state.borderSize}
+            elementProperties={el.elementProperties}
          />
       );
    }
