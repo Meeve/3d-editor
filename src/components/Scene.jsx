@@ -12,8 +12,6 @@ class Scene extends Component {
       this.state = {
          scale: 1
       };
-
-      this.props.addIcosa();
    }
 
    changeProp = (prop, value) => {

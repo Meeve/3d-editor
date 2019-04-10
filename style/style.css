@@ -228,3 +228,13 @@ body {
    border-bottom: 1px solid rgb(101, 101, 101);
    background-color: rgb(114, 114, 114);
 }
+
+/* info */
+
+.infoList {
+   padding-left: 5px;
+}
+
+.infoList div:nth-child(even) {
+   background-color: rgb(108, 108, 108);
+}

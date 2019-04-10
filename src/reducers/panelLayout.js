@@ -21,8 +21,24 @@ function getDefaultPanelLayout() {
    const rowSize = window.innerHeight;
    return {
       components: [
-         { element: ViewSelector, colStart: 1, colEnd: 2, rowStart: 1, rowEnd: 2 },
-         { element: ViewSelector, colStart: 2, colEnd: 3, rowStart: 1, rowEnd: 2 }
+         {
+            element: ViewSelector,
+            colStart: 1,
+            colEnd: 3,
+            rowStart: 1,
+            rowEnd: 2,
+            elementProperties: { selectedView: 'Info' }
+         },
+
+         { element: ViewSelector, colStart: 1, colEnd: 2, rowStart: 2, rowEnd: 3 },
+         {
+            element: ViewSelector,
+            colStart: 2,
+            colEnd: 3,
+            rowStart: 2,
+            rowEnd: 3,
+            elementProperties: { selectedView: 'Scene' }
+         }
 
          // {element: ViewSelector, colStart: 1, colEnd: 3, rowStart: 3, rowEnd: 4},
          // {element: ViewSelector, colStart: 3, colEnd: 4, rowStart: 2, rowEnd: 5},
@@ -35,7 +51,7 @@ function getDefaultPanelLayout() {
          // {element: ViewSelector, colStart: 4, colEnd: 5, rowStart: 4, rowEnd: 5},
       ],
       columnSizes: [colSize, colSize],
-      rowSizes: [rowSize]
+      rowSizes: [25, rowSize - 25]
    };
 }
 
@@ -118,14 +134,18 @@ export default (state = getDefaultPanelLayout(), action) => {
          };
       }
       case TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS: {
+         const currentOffset = action.yOffset - state.yMouseClick;
+         const firstRowSize = state.prevActiveRowValue + currentOffset;
+         const secondRowSize = state.prevSibilingRowValue - currentOffset;
+         const activeColumnsHeight = state.prevActiveRowValue + state.prevSibilingRowValue;
          return {
             ...state,
             rowSizes: state.rowSizes
                .slice(0, state.activeRow)
                .concat(
                   [
-                     state.prevActiveRowValue + action.yOffset - state.yMouseClick,
-                     state.prevSibilingRowValue - (action.yOffset - state.yMouseClick)
+                     Math.min(Math.max(25, firstRowSize), activeColumnsHeight - 25),
+                     Math.min(Math.max(25, secondRowSize), activeColumnsHeight - 25)
                   ],
                   state.rowSizes.slice(state.activeRow + 2)
                )
