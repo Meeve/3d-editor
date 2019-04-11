@@ -25,7 +25,8 @@ class Canvas extends Component {
          timer: 0,
          xOffset: 0,
          drawSceneInterval: null,
-         mouseUpListener
+         mouseUpListener,
+         distance: 14
       };
    }
 
@@ -119,7 +120,7 @@ class Canvas extends Component {
       let helper = mat4.create();
 
       helper = mat4.create();
-      mat4.translate(helper, modelViewMatrix, [0, -3, -14]);
+      mat4.translate(helper, modelViewMatrix, [0, -3, -this.state.distance]);
       modelViewMatrix = helper;
 
       helper = mat4.create();
@@ -167,10 +168,16 @@ class Canvas extends Component {
       }
    }
 
+   onScroll = event => {
+      this.setState({
+         distance: this.state.distance + event.deltaY / 100
+      });
+   };
+
    render() {
       this.setPerspective(); // TODO change this for event "onColumnResize"
       return (
-         <div ref={ref => (this.canvas = ref)} style={{ overflow: 'hidden' }}>
+         <div ref={ref => (this.canvas = ref)} style={{ overflow: 'hidden' }} onWheel={this.onScroll}>
             <canvas
                onMouseDown={e => {
                   this.setState({ mouseDown: true, clickedX: e.pageX, prevXValue: this.state.xOffset });
