@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { mat4 } from 'gl-matrix';
 import { getShaderProgram } from '../shaders/shaders.js';
+import { getGrid } from '../reducers/mesh/grid.js';
 
 class Canvas extends Component {
    constructor(props) {
@@ -18,15 +19,17 @@ class Canvas extends Component {
          gl: null,
          pMatrixUniform: null,
          mvMatrixUniform: null,
+         viewMatrixUniform: null,
          vertexPositionAttribute: null,
          vertexColorAttribute: null,
          projectionMatrix: mat4.create(),
          models: [],
-         timer: 0,
          xOffset: 0,
+         yOffset: 0,
          drawSceneInterval: null,
          mouseUpListener,
-         distance: 14
+         distance: 14,
+         grid: getGrid()
       };
    }
 
@@ -40,12 +43,38 @@ class Canvas extends Component {
       for (let model of this.state.models) {
          this.initModel(model);
       }
+
+      this.state.grid.vertexBuffer = this.state.gl.createBuffer();
+      this.state.gl.bindBuffer(this.state.gl.ARRAY_BUFFER, this.state.grid.vertexBuffer);
+      this.state.gl.bufferData(
+         this.state.gl.ARRAY_BUFFER,
+         new Float32Array(this.state.grid.vertices),
+         this.state.gl.STATIC_DRAW
+      );
+
+      this.state.grid.colorBuffer = this.state.gl.createBuffer();
+      this.state.gl.bindBuffer(this.state.gl.ARRAY_BUFFER, this.state.grid.colorBuffer);
+      this.state.gl.bufferData(
+         this.state.gl.ARRAY_BUFFER,
+         new Float32Array(this.state.grid.colors),
+         this.state.gl.STATIC_DRAW
+      );
+
       let interval = setInterval(() => {
-         this.setState({
-            timer: this.state.timer + 0.01
-         });
          this.drawScene();
-      }, 10);
+
+         this.state.gl.uniformMatrix4fv(this.state.pMatrixUniform, false, this.state.projectionMatrix);
+         this.state.gl.uniformMatrix4fv(this.state.mvMatrixUniform, false, mat4.create());
+         this.state.gl.uniformMatrix4fv(this.state.viewMatrixUniform, false, this.getViewMatrix());
+
+         this.state.gl.bindBuffer(this.state.gl.ARRAY_BUFFER, this.state.grid.vertexBuffer);
+         this.state.gl.vertexAttribPointer(this.state.vertexPositionAttribute, 3, this.state.gl.FLOAT, false, 0, 0);
+
+         this.state.gl.bindBuffer(this.state.gl.ARRAY_BUFFER, this.state.grid.colorBuffer);
+         this.state.gl.vertexAttribPointer(this.state.vertexColorAttribute, 4, this.state.gl.FLOAT, false, 0, 0);
+
+         this.state.gl.drawArrays(this.state.gl.LINES, 0, this.state.grid.vertices.length / 3);
+      }, 1000 / 60);
 
       this.setState({
          drawSceneInterval: interval
@@ -86,6 +115,7 @@ class Canvas extends Component {
 
       this.state.pMatrixUniform = this.state.gl.getUniformLocation(program, 'uPMatrix'); // TODO
       this.state.mvMatrixUniform = this.state.gl.getUniformLocation(program, 'uMVMatrix'); // TODO
+      this.state.viewMatrixUniform = this.state.gl.getUniformLocation(program, 'viewMatrix');
    }
 
    initModel(model) {
@@ -115,39 +145,55 @@ class Canvas extends Component {
       }
    }
 
-   drawModel(model) {
+   getViewMatrix = () => {
+      let helper = mat4.create();
+      let viewMatrix = mat4.create();
+      let rotationY = mat4.create();
+      mat4.fromYRotation(rotationY, this.state.xOffset);
+
+      let rotationX = mat4.create();
+      mat4.fromXRotation(rotationX, this.state.yOffset);
+
+      let translationHelper = mat4.create();
+      mat4.fromTranslation(translationHelper, [0, -3, -this.state.distance]);
+
+      helper = mat4.create();
+      mat4.multiply(helper, translationHelper, rotationX);
+      viewMatrix = helper;
+
+      helper = mat4.create();
+      mat4.multiply(helper, viewMatrix, rotationY);
+      viewMatrix = helper;
+
+      return viewMatrix;
+   };
+
+   getModelMatrix = model => {
       let modelViewMatrix = mat4.create();
       let helper = mat4.create();
-
-      helper = mat4.create();
-      mat4.translate(helper, modelViewMatrix, [0, -3, -this.state.distance]);
-      modelViewMatrix = helper;
-
-      helper = mat4.create();
-      mat4.rotateY(helper, modelViewMatrix, this.state.xOffset);
-      modelViewMatrix = helper;
 
       mat4.translate(helper, modelViewMatrix, [model.x, model.y, model.z]);
       modelViewMatrix = helper;
 
-      if (model.rx) {
-         helper = mat4.create();
-         mat4.rotateX(helper, modelViewMatrix, model.rx);
-         modelViewMatrix = helper;
-      }
-      if (model.ry) {
-         helper = mat4.create();
-         mat4.rotateY(helper, modelViewMatrix, model.ry);
-         modelViewMatrix = helper;
-      }
-      if (model.rz) {
-         helper = mat4.create();
-         mat4.rotateZ(helper, modelViewMatrix, model.rz);
-         modelViewMatrix = helper;
-      }
+      helper = mat4.create();
+      mat4.rotateX(helper, modelViewMatrix, model.rx);
+      modelViewMatrix = helper;
 
+      helper = mat4.create();
+      mat4.rotateY(helper, modelViewMatrix, model.ry);
+      modelViewMatrix = helper;
+
+      helper = mat4.create();
+      mat4.rotateZ(helper, modelViewMatrix, model.rz);
+      modelViewMatrix = helper;
+
+      return modelViewMatrix;
+   };
+
+   drawModel(model) {
       this.state.gl.uniformMatrix4fv(this.state.pMatrixUniform, false, this.state.projectionMatrix);
-      this.state.gl.uniformMatrix4fv(this.state.mvMatrixUniform, false, modelViewMatrix);
+      this.state.gl.uniformMatrix4fv(this.state.mvMatrixUniform, false, this.getModelMatrix(model));
+      this.state.gl.uniformMatrix4fv(this.state.viewMatrixUniform, false, this.getViewMatrix());
 
       this.state.gl.bindBuffer(this.state.gl.ARRAY_BUFFER, model.vertexBuffer);
       this.state.gl.vertexAttribPointer(this.state.vertexPositionAttribute, 3, this.state.gl.FLOAT, false, 0, 0);
@@ -161,9 +207,9 @@ class Canvas extends Component {
 
    mouseMove(e) {
       if (this.state.mouseDown && this.state.isMouseIn) {
-         let offset = this.state.prevXValue + (+e.pageX - this.state.clickedX) / 100;
          this.setState({
-            xOffset: offset
+            xOffset: this.state.prevXValue + (+e.pageX - this.state.clickedX) / 100,
+            yOffset: this.state.prevYValue + (+e.pageY - this.state.clickedY) / 100
          });
       }
    }
@@ -180,7 +226,13 @@ class Canvas extends Component {
          <div ref={ref => (this.canvas = ref)} style={{ overflow: 'hidden' }} onWheel={this.onScroll}>
             <canvas
                onMouseDown={e => {
-                  this.setState({ mouseDown: true, clickedX: e.pageX, prevXValue: this.state.xOffset });
+                  this.setState({
+                     mouseDown: true,
+                     clickedX: e.pageX,
+                     prevXValue: this.state.xOffset,
+                     clickedY: e.pageY,
+                     prevYValue: this.state.yOffset
+                  });
                }}
                onMouseMove={this.mouseMove.bind(this)}
                onMouseLeave={e => this.setState({ isMouseIn: false })}
