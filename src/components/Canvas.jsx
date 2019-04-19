@@ -155,7 +155,7 @@ class Canvas extends Component {
       mat4.fromXRotation(rotationX, this.state.yOffset);
 
       let translationHelper = mat4.create();
-      mat4.fromTranslation(translationHelper, [0, -3, -this.state.distance]);
+      mat4.fromTranslation(translationHelper, [0, 0, -this.state.distance]);
 
       helper = mat4.create();
       mat4.multiply(helper, translationHelper, rotationX);
@@ -203,6 +203,8 @@ class Canvas extends Component {
 
       this.state.gl.bindBuffer(this.state.gl.ELEMENT_ARRAY_BUFFER, model.faceBuffer);
       this.state.gl.drawElements(this.state.gl.TRIANGLES, model.faces.length, this.state.gl.UNSIGNED_SHORT, 0);
+
+      this.state.gl.drawArrays(this.state.gl.LINES, 0, model.vertices.length / 3);
    }
 
    mouseMove(e) {

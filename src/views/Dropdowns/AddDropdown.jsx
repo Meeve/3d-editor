@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dropdown from '../../components/dropdown/Dropdown';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addCube, addPlane, addPyramid, addIcosa } from '../../actions/index.js';
+import { addCube, addPlane, addPyramid, addIcosa, addSphere } from '../../actions/index.js';
 
 class AddDropdown extends Component {
    render() {
@@ -21,6 +21,9 @@ class AddDropdown extends Component {
                <button type="button" className="dropdownButton" onClick={this.props.addIcosa.bind(this)}>
                   Add Icosahedron
                </button>
+               <button type="button" className="dropdownButton" onClick={this.props.addSphere.bind(this)}>
+                  Add Sphere
+               </button>
             </Dropdown>
          </Dropdown>
       );
@@ -28,7 +31,7 @@ class AddDropdown extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators({ addCube, addPlane, addPyramid, addIcosa }, dispatch);
+   return bindActionCreators({ addCube, addPlane, addPyramid, addIcosa, addSphere }, dispatch);
 }
 
 export default connect(
