@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Canvas from './Canvas';
 import Scene from './Scene';
 import Scroller from './Scroller';
 import AddDropdown from '../views/Dropdowns/AddDropdown';
+import ConnectedCanvas from '../views/ConnectedCanvas';
 import Dropdown from './dropdown/Dropdown';
 import Timeline from './Timeline';
 import Info from './Info';
@@ -16,7 +16,7 @@ export default class ViewSelector extends Component {
          views: {
             Canvas: {
                name: 'Canvas',
-               getElement: () => <Canvas />
+               getElement: () => <ConnectedCanvas />
             },
             Scene: {
                name: 'Scene',
