@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import ViewSelector from './ViewSelector';
 import PanelManipulator from './PanelManipulator';
 import * as actions from '../actions/index';
+import _ from 'lodash';
 
 class PanelResizer extends React.Component {
    constructor(props) {
       super(props);
-
+      this.handleLeftRightResizing = _.throttle(this.handleLeftRightResizing, 20);
+      this.handleTopBottomResizing = _.throttle(this.handleTopBottomResizing, 20);
       this.state = {
          isUpDownResizing: false,
          isLeftRightResizing: false,
@@ -31,14 +30,21 @@ class PanelResizer extends React.Component {
    }
 
    appResize(e) {
-      if (this.props.panelLayout.isLeftRightResizing) {
-         this.props.transformColumnSizesBetweenSiblings(e.pageX);
-      }
-
-      if (this.props.panelLayout.isUpDownResizing) {
-         this.props.transformRowSizesBetweenSiblings(e.pageY);
-      }
+      this.handleLeftRightResizing(e.pageX);
+      this.handleTopBottomResizing(e.pageY);
    }
+
+   handleTopBottomResizing = pageY => {
+      if (this.props.panelLayout.isUpDownResizing) {
+         this.props.transformRowSizesBetweenSiblings(pageY);
+      }
+   };
+
+   handleLeftRightResizing = pageX => {
+      if (this.props.panelLayout.isLeftRightResizing) {
+         this.props.transformColumnSizesBetweenSiblings(pageX);
+      }
+   };
 
    stopResizing() {
       this.props.stopResizing();

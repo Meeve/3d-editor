@@ -7,9 +7,7 @@ export default class Canvas extends Component {
       super(props);
 
       let mouseUpListener = window.addEventListener('mouseup', () => {
-         this.setState({
-            mouseDown: false
-         });
+         this.mouseDown = false;
       });
 
       this.state = {
@@ -28,26 +26,28 @@ export default class Canvas extends Component {
       };
    }
 
-   shouldComponentUpdate(prevProps, prevState) {
-      return this.lastRenderTime + 17 < new Date().getTime();
+   shouldComponentUpdate(prevProps) {
+      return (
+         this.lastRenderTime + 17 < new Date().getTime() ||
+         prevProps.height != this.props.height ||
+         prevProps.width != this.props.width
+      );
    }
 
    componentDidMount() {
+      //First render is to render canvas
       this.state.gl = document.getElementById(this.state.holder).getContext('webgl');
       this.state.gl.clearColor(0.22, 0.22, 0.22, 1.0);
       this.setPerspective();
       this.state.gl.enable(this.state.gl.DEPTH_TEST);
       this.initShaders();
 
-      setTimeout(() => {
-         this.drawScene();
-      });
+      //Secound render is to render scene and pass children
+      this.forceUpdate();
    }
 
    setPerspective() {
-      let width = this.getWidth();
-      let height = this.getHeight();
-      mat4.perspective(this.state.projectionMatrix, 45, width / height, 0.1, 100.0);
+      mat4.perspective(this.state.projectionMatrix, 45, this.props.width / this.props.height, 0.1, 100.0);
    }
 
    componentWillUnmount() {
@@ -56,19 +56,19 @@ export default class Canvas extends Component {
 
    initShaders() {
       let program = getShaderProgram(this.state.gl);
-      this.state.vertexPositionAttribute = this.state.gl.getAttribLocation(program, 'aPos'); // TODO
+      this.state.vertexPositionAttribute = this.state.gl.getAttribLocation(program, 'aPos');
       this.state.gl.enableVertexAttribArray(this.state.vertexPositionAttribute);
 
-      this.state.vertexColorAttribute = this.state.gl.getAttribLocation(program, 'aCol'); // TODO
+      this.state.vertexColorAttribute = this.state.gl.getAttribLocation(program, 'aCol');
       this.state.gl.enableVertexAttribArray(this.state.vertexColorAttribute);
 
-      this.state.pMatrixUniform = this.state.gl.getUniformLocation(program, 'uPMatrix'); // TODO
-      this.state.mvMatrixUniform = this.state.gl.getUniformLocation(program, 'uMVMatrix'); // TODO
+      this.state.pMatrixUniform = this.state.gl.getUniformLocation(program, 'uPMatrix');
+      this.state.mvMatrixUniform = this.state.gl.getUniformLocation(program, 'uMVMatrix');
       this.state.viewMatrixUniform = this.state.gl.getUniformLocation(program, 'viewMatrix');
    }
 
    drawScene() {
-      this.state.gl.viewport(0, 0, this.getWidth(), this.getHeight());
+      this.state.gl.viewport(0, 0, this.props.width, this.props.height);
       this.state.gl.clear(this.state.gl.COLOR_BUFFER_BIT);
 
       this.state.gl.uniformMatrix4fv(this.state.pMatrixUniform, false, this.state.projectionMatrix);
@@ -100,7 +100,7 @@ export default class Canvas extends Component {
    };
 
    mouseMove(e) {
-      if (this.state.mouseDown && this.state.isMouseIn) {
+      if (this.mouseDown && this.state.isMouseIn) {
          this.setState({
             xOffset: this.state.prevXValue + (+e.pageX - this.state.clickedX) / 100,
             yOffset: this.state.prevYValue + (+e.pageY - this.state.clickedY) / 100
@@ -123,29 +123,37 @@ export default class Canvas extends Component {
                gl: this.state.gl,
                vertexColorAttribute: this.state.vertexColorAttribute,
                vertexPositionAttribute: this.state.vertexPositionAttribute,
+               mvMatrixUniform: this.state.mvMatrixUniform,
                key: child.props.meshProperties.id
             });
          }
       });
    };
 
-   render() {
-      this.lastRenderTime = new Date().getTime();
-      this.setPerspective(); // TODO change this for event "onColumnResize"
+   componentDidUpdate(prevProps) {
+      if (prevProps.height != this.props.height || prevProps.width != this.props.width) {
+         this.setPerspective();
+         this.forceUpdate();
+      }
+   }
+
+   getMeshes = () => {
       let meshes = '';
       if (this.state.gl) {
          this.drawScene();
          meshes = _.flattenDeep(this.getChildArray(this.props.children));
-      } else {
-         this.setState({});
       }
+      return meshes;
+   };
 
+   render() {
+      this.lastRenderTime = new Date().getTime();
       return (
-         <div ref={ref => (this.canvas = ref)} style={{ overflow: 'hidden' }} onWheel={this.onScroll}>
+         <div style={{ overflow: 'hidden' }} onWheel={this.onScroll}>
             <canvas
                onMouseDown={e => {
+                  this.mouseDown = true;
                   this.setState({
-                     mouseDown: true,
                      clickedX: e.pageX,
                      prevXValue: this.state.xOffset,
                      clickedY: e.pageY,
@@ -156,19 +164,11 @@ export default class Canvas extends Component {
                onMouseLeave={e => this.setState({ isMouseIn: false })}
                onMouseEnter={e => this.setState({ isMouseIn: true })}
                id={this.state.holder}
-               width={this.getWidth() + 'px'}
-               height={this.getHeight() + 'px'}
+               width={this.props.width + 'px'}
+               height={this.props.height + 'px'}
             />
-            {meshes}
+            {this.getMeshes()}
          </div>
       );
-   }
-
-   getHeight() {
-      return this.canvas ? this.canvas.offsetHeight : 0;
-   }
-
-   getWidth() {
-      return this.canvas ? this.canvas.offsetWidth : 0;
    }
 }

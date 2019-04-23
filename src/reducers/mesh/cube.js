@@ -4,10 +4,6 @@ export default function cube() {
       faces: getFaces(),
       colors: getColors(),
 
-      vertexBuffer: null,
-      faceBuffer: null,
-      colorBuffer: null,
-
       x: 0,
       y: 0,
       z: 0,

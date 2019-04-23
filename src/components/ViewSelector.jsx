@@ -16,7 +16,9 @@ export default class ViewSelector extends Component {
          views: {
             Canvas: {
                name: 'Canvas',
-               getElement: () => <ConnectedCanvas />
+               getElement: () => (
+                  <ConnectedCanvas height={this.props.componentHeight - 25} width={this.props.componentWidth} />
+               )
             },
             Scene: {
                name: 'Scene',

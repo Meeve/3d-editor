@@ -4,10 +4,6 @@ export default function pyramid() {
       faces: getFaces(),
       colors: getColors(),
 
-      vertexBuffer: null,
-      faceBuffer: null,
-      colorBuffer: null,
-
       x: 0,
       y: 1,
       z: 0,
@@ -18,6 +14,7 @@ export default function pyramid() {
    };
 }
 
+// prettier-ignore
 function getVertices() {
    return [
       // Podstawa
@@ -40,7 +37,7 @@ function getVertices() {
       +0.0
    ];
 }
-
+// prettier-ignore
 function getFaces() {
    return [
       // Podstawa
@@ -66,7 +63,7 @@ function getFaces() {
       4
    ];
 }
-
+// prettier-ignore
 function getColors() {
    return [
       // Podstawa

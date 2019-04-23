@@ -8,7 +8,7 @@ import { getGrid } from '../reducers/mesh/grid';
 class ConnectedCanvas extends React.Component {
    render() {
       return (
-         <Canvas>
+         <Canvas {...this.props}>
             {_.map(this.props.meshes, meshProperties => (
                <Mesh key={meshProperties.id} meshProperties={meshProperties} />
             ))}

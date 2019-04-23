@@ -1,26 +1,22 @@
 export default function icosahedron() {
-    return {
-        vertices: getVertices(),
-        faces: getFaces(),
-        colors: getColors(),
+   return {
+      vertices: getVertices(),
+      faces: getFaces(),
+      colors: getColors(),
 
-        vertexBuffer: null,
-        faceBuffer: null,
-        colorBuffer: null,
+      x: 0,
+      y: 1,
+      z: 0,
 
-        x: 0,
-        y: 1,
-        z: 0,
-
-        rx: 0,
-        ry: 0,
-        rz: 0
-    }
+      rx: 0,
+      ry: 0,
+      rz: 0
+   };
 }
 
 const X = 0.525731112119133606;
 const Z = 0.850650808352039932;
-
+// prettier-ignore
 function getVertices() {
     return [
         -X, 0.0, +Z,
@@ -37,7 +33,7 @@ function getVertices() {
         -Z, -X, 0.0,
     ];
 }
-
+// prettier-ignore
 function getFaces() {
     return [
         0, 4, 1,
@@ -62,7 +58,7 @@ function getFaces() {
         7, 2, 11,
     ];
 }
-
+// prettier-ignore
 function getColors() {
     return [
         // Podstawa
