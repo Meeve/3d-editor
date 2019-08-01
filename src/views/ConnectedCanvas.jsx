@@ -12,7 +12,6 @@ class ConnectedCanvas extends React.Component {
             {_.map(this.props.meshes, meshProperties => (
                <Mesh key={meshProperties.id} meshProperties={meshProperties} />
             ))}
-            <Mesh meshProperties={getGrid()} />
          </Canvas>
       );
    }

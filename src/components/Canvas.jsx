@@ -62,6 +62,10 @@ export default class Canvas extends Component {
       this.state.vertexColorAttribute = this.state.gl.getAttribLocation(program, 'aCol');
       this.state.gl.enableVertexAttribArray(this.state.vertexColorAttribute);
 
+      this.state.vertexNormalAttribute = this.state.gl.getAttribLocation(program, 'aVertexNormal');
+      this.state.gl.enableVertexAttribArray(this.state.vertexNormalAttribute);
+
+      this.state.normalMatrix = this.state.gl.getUniformLocation(program, 'uNormalMatrix');
       this.state.pMatrixUniform = this.state.gl.getUniformLocation(program, 'uPMatrix');
       this.state.mvMatrixUniform = this.state.gl.getUniformLocation(program, 'uMVMatrix');
       this.state.viewMatrixUniform = this.state.gl.getUniformLocation(program, 'viewMatrix');
@@ -74,7 +78,15 @@ export default class Canvas extends Component {
       this.state.gl.uniformMatrix4fv(this.state.pMatrixUniform, false, this.state.projectionMatrix);
       this.state.gl.uniformMatrix4fv(this.state.mvMatrixUniform, false, mat4.create());
       this.state.gl.uniformMatrix4fv(this.state.viewMatrixUniform, false, this.getViewMatrix());
+      this.state.gl.uniformMatrix4fv(this.state.normalMatrix, false, this.getNormalMatrix(this.getViewMatrix()));
    }
+
+   getNormalMatrix = modelViewMatrix => {
+      const normalMatrix = mat4.create();
+      mat4.invert(normalMatrix, modelViewMatrix);
+      mat4.transpose(normalMatrix, normalMatrix);
+      return normalMatrix;
+   };
 
    getViewMatrix = () => {
       let helper = mat4.create();
@@ -123,7 +135,9 @@ export default class Canvas extends Component {
                gl: this.state.gl,
                vertexColorAttribute: this.state.vertexColorAttribute,
                vertexPositionAttribute: this.state.vertexPositionAttribute,
+               vertexNormalAttribute: this.state.vertexNormalAttribute,
                mvMatrixUniform: this.state.mvMatrixUniform,
+               normalMatrix: this.state.normalMatrix,
                key: child.props.meshProperties.id
             });
          }

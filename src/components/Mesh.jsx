@@ -9,6 +9,17 @@ export default class Mesh extends React.Component {
    }
 
    initModel(model) {
+      let normalBuffer = null;
+      if (model.normals) {
+         normalBuffer = this.props.gl.createBuffer();
+         this.props.gl.bindBuffer(this.props.gl.ARRAY_BUFFER, normalBuffer);
+         this.props.gl.bufferData(
+            this.props.gl.ARRAY_BUFFER,
+            new Float32Array(model.normals),
+            this.props.gl.STATIC_DRAW
+         );
+      }
+
       const vertexBuffer = this.props.gl.createBuffer();
       this.props.gl.bindBuffer(this.props.gl.ARRAY_BUFFER, vertexBuffer);
       this.props.gl.bufferData(this.props.gl.ARRAY_BUFFER, new Float32Array(model.vertices), this.props.gl.STATIC_DRAW);
@@ -28,7 +39,7 @@ export default class Mesh extends React.Component {
       this.props.gl.bindBuffer(this.props.gl.ARRAY_BUFFER, colorBuffer);
       this.props.gl.bufferData(this.props.gl.ARRAY_BUFFER, new Float32Array(model.colors), this.props.gl.STATIC_DRAW);
 
-      this.state = { vertexBuffer, faceBuffer, colorBuffer };
+      this.state = { vertexBuffer, faceBuffer, colorBuffer, normalBuffer };
    }
 
    getModelMatrix = model => {
@@ -61,6 +72,11 @@ export default class Mesh extends React.Component {
 
       this.props.gl.bindBuffer(this.props.gl.ARRAY_BUFFER, this.state.colorBuffer);
       this.props.gl.vertexAttribPointer(this.props.vertexColorAttribute, 4, this.props.gl.FLOAT, false, 0, 0);
+
+      if (model.normals) {
+         this.props.gl.bindBuffer(this.props.gl.ARRAY_BUFFER, this.state.normalBuffer);
+         this.props.gl.vertexAttribPointer(this.props.vertexNormalAttribute, 3, this.props.gl.FLOAT, false, 0, 0);
+      }
 
       if (model.faces) {
          this.props.gl.bindBuffer(this.props.gl.ELEMENT_ARRAY_BUFFER, this.state.faceBuffer);
