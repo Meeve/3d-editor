@@ -142,18 +142,23 @@ export default class Dropdown extends React.Component {
       return this.state.calculateDirection(dropdownSizes, openerSizes);
    };
 
+   closeDropDown = () => {
+      this.setState({ isOpened: false });
+   };
+
    render() {
       return (
-         <div
-            className="dropdown"
-            ref={this.state.opennerHolderRef}
-            onMouseLeave={() => this.setState({ isOpened: false })}>
+         <div className="dropdown" ref={this.state.opennerHolderRef} onMouseLeave={this.closeDropDown}>
             <div className="dropdownContent" {...this.state.openActions}>
                {this.props.content}
             </div>
             {this.getExpandedDropdown()}
 
-            <div className="dropdownEventCatcher" style={this.getStylesForEventCatcher()} />
+            <div
+               className="dropdownEventCatcher"
+               onClick={this.closeDropDown}
+               style={this.getStylesForEventCatcher()}
+            />
          </div>
       );
    }
