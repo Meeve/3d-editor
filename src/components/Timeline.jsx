@@ -27,7 +27,6 @@ export default class Timeline extends React.Component {
    };
 
    render() {
-      console.log(this.state.steps);
       let dif = this.state.max - this.state.min;
 
       const strips = _.range(this.state.steps + 1).map(() => (
@@ -35,9 +34,11 @@ export default class Timeline extends React.Component {
             <div className="inner-strip" />
          </div>
       ));
-      const stripValues = _.range(this.state.min, this.state.max + dif / this.state.steps, dif / this.state.steps).map(
-         stripValue => <span>{stripValue}</span>
-      );
+      const stripValues = _.range(
+         this.state.min,
+         this.state.max + dif / this.state.steps,
+         dif / this.state.steps
+      ).map(stripValue => <span>{stripValue}</span>);
 
       return (
          <div className="timeline-background" onWheel={this.onScroll}>
