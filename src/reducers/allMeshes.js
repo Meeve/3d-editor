@@ -3,6 +3,8 @@ import cube from './mesh/cube';
 import pyramid from './mesh/pyramid';
 import icosahedron from './mesh/icosahedron';
 import sphere from './mesh/sphere';
+import _ from 'lodash';
+import { MERGE_MESHES_UPDATE } from '../actions/types';
 
 export default (state = {}, action) => {
    switch (action.type) {
@@ -17,8 +19,10 @@ export default (state = {}, action) => {
       case 'addSphere':
          return addMesh(sphere(), state, 'New sphere');
 
-      case 'changeMeshProp': {
+      case 'changeMeshProp':
          return changeMeshProp(state, action);
+      case MERGE_MESHES_UPDATE: {
+         return _.merge({}, state, action.payload);
       }
    }
    return state;

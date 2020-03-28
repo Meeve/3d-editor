@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changeScale, addCube, addPlane, addPyramid, addIcosa, selectMesh, changeMeshProp } from '../actions/index.js';
-import NumberField from './NumberField';
+import { changeScale, addCube, addPlane, addPyramid, addIcosa, selectMesh, changeMeshProp } from '../../actions/index.js';
+import { NumberField } from '../../components/inputs/NumberField';
 import _ from 'lodash';
 
 class Scene extends Component {

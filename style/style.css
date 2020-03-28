@@ -176,7 +176,28 @@ body {
    background-color: rgb(68, 68, 68);
 }
 
+.selection {
+   position: absolute;
+   background-color: rgb(96, 192, 64);
+   width: 3px;
+   height: 100%;
+   top: 0;
+   left: 0;
+   z-index: 10;
+}
+
+.keyFrame {
+   position: absolute;
+   background-color: rgb(192, 183, 64);
+   width: 1px;
+   height: 60%;
+   top: 40%;
+   left: 10px;
+   z-index: 5;
+}
+
 .stripes {
+   position: relative;
    height: calc(100% - 15px);
    width: 100%;
    display: flex;
@@ -187,6 +208,7 @@ body {
 .outer-strip {
    width: 25px;
    display: flex;
+   z-index: 5;
 }
 
 .inner-strip {
@@ -214,11 +236,15 @@ body {
 
 .timeline {
    position: absolute;
-   left: 20%;
    background-color: rgb(114, 114, 114);
-   width: 60%;
    height: 100%;
+   z-index: 1;
 }
+
+.timelineStrip {
+   display: flex;
+}
+
 /* view selector */
 
 .viewSelectorStrip {
@@ -237,4 +263,85 @@ body {
 
 .infoList div:nth-child(even) {
    background-color: rgb(108, 108, 108);
+}
+
+/* numerField */
+
+.numberFieldHolder + .numberFieldHolder .numberField {
+   border-radius: 0;
+}
+
+.numberFieldHolder:last-child .numberField {
+   border-radius: 0 0 10px 10px;
+   border-bottom: 1px solid rgb(57,57,57);
+}
+
+.numberFieldHolder:only-child .numberField {
+   border-radius: 20px;
+   border-bottom: 1px solid rgb(57,57,57);
+}
+
+.numberFieldHolder {
+   display: flex;
+   height: 20px;
+   width: 100%;
+}
+
+.numberField {
+   flex: 1;
+   display: flex;
+   align-items: center;
+   border-radius: 10px 10px 0 0;
+   background: linear-gradient( rgb(160,160,160), rgb(180,180,180));
+   border: 1px solid rgb(57,57,57);
+   border-bottom: 0;
+   max-width: 100%;
+   padding: 2px 5px;
+   box-sizing: border-box;
+}
+
+.numberFieldLabel {
+   white-space: nowrap;
+}
+
+.numberField::selection {
+   color: white;
+   background-color: rgb(90, 90, 90);
+}
+
+.numberField:focus {
+   outline: none;
+}
+
+.numberField .arrow {
+   border-bottom: 5px solid rgba(0, 0, 0, 0);
+   border-top: 5px solid rgba(0, 0, 0, 0);
+}
+
+.numberField .leftArrow {
+   border-right: 5px solid rgb(118, 118, 118);
+}
+
+.numberField .rightArrow {
+   border-left: 5px solid rgb(118, 118, 118);
+}
+
+.numberField .numberFieldText {
+   flex: 1;
+   text-align: right;
+}
+
+.sliderState {
+   background: linear-gradient( rgb(180,180,180), rgb(195,195,195));
+}
+
+.numerFieldInput {
+   background: linear-gradient( rgb(130,130,130), rgb(150,150,150));
+}
+
+.numberFieldDisplayerHolder {
+   display: flex;
+   flex: 1;
+   margin: 0 5px;
+   overflow: hidden;
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import ViewSelector from "./ViewSelector";
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 

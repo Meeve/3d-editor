@@ -1,5 +1,5 @@
 import React from 'react';
-import ViewSelector from '../components/ViewSelector';
+import ViewSelector from '../views/ViewSelector/ViewSelector';
 import {
    CHANGE_COLUMN_SIZES,
    CHANGE_ROW_SIZES,
@@ -17,14 +17,14 @@ import {
 } from '../actions/types';
 
 function getDefaultPanelLayout() {
-   const colSize = window.innerWidth / 2;
+   const colSize = window.innerWidth / 3;
    const rowSize = window.innerHeight;
    return {
       components: [
          {
             element: ViewSelector,
             colStart: 1,
-            colEnd: 3,
+            colEnd: 4,
             rowStart: 1,
             rowEnd: 2,
             elementProperties: { selectedView: 'Info' }
@@ -38,6 +38,20 @@ function getDefaultPanelLayout() {
             rowStart: 2,
             rowEnd: 3,
             elementProperties: { selectedView: 'Scene' }
+         }, {
+            element: ViewSelector,
+            colStart: 3,
+            colEnd: 4,
+            rowStart: 2,
+            rowEnd: 3,
+            elementProperties: { selectedView: 'DopeSheet' }
+         }, {
+            element: ViewSelector,
+            colStart: 1,
+            colEnd: 4,
+            rowStart: 3,
+            rowEnd: 4,
+            elementProperties: { selectedView: 'Timeline' }
          }
 
          // {element: ViewSelector, colStart: 1, colEnd: 3, rowStart: 3, rowEnd: 4},
@@ -50,8 +64,8 @@ function getDefaultPanelLayout() {
          // {element: ViewSelector, colStart: 4, colEnd: 5, rowStart: 3, rowEnd: 4},
          // {element: ViewSelector, colStart: 4, colEnd: 5, rowStart: 4, rowEnd: 5},
       ],
-      columnSizes: [colSize, colSize],
-      rowSizes: [25, rowSize - 25]
+      columnSizes: [colSize + 600, colSize - 300, colSize - 300],
+      rowSizes: [25, rowSize - 225, 200]
    };
 }
 

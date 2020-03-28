@@ -1,3 +1,4 @@
+export const MERGE_MESHES_UPDATE = 'merge_meshes_update';
 export const CHANGE_COLUMN_SIZES = 'change_column_sizes';
 export const CHANGE_ROW_SIZES = 'change_row_sizes';
 export const REMOVE_COMPONENT = 'remove_component';

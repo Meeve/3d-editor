@@ -1,9 +1,9 @@
 import React from 'react';
-import Canvas from '../components/Canvas';
+import Canvas from '../../components/webGL/Canvas';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import Mesh from '../components/Mesh';
-import { getGrid } from '../reducers/mesh/grid';
+import Mesh from '../../components/webGL/Mesh';
+import { getGrid } from '../../reducers/mesh/grid';
 
 class ConnectedCanvas extends React.Component {
    render() {

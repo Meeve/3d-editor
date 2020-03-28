@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import Scene from './Scene';
-import Scroller from './Scroller';
-import AddDropdown from '../views/Dropdowns/AddDropdown';
-import ConnectedCanvas from '../views/ConnectedCanvas';
-import Dropdown from './dropdown/Dropdown';
-import Timeline from './Timeline';
-import Info from './Info';
+import Scene from '../Scene/Scene';
+import Scroller from '../../components/Scroller';
+import AddDropdown from '../Dropdowns/AddDropdown';
+import ConnectedCanvas from '../Canvas/ConnectedCanvas';
+import ConnectedTimeline from '../Timeline/ConnectedTimeline';
+import Dropdown from '../../components/dropdown/Dropdown';
+import { DopeSheet } from '../DopeSheet/DopeSheet';
+import { DopeSheetStrip } from '../DopeSheet/DopeSheetStrip';
+import Info from '../Info/Info';
+import TimelineStrip from '../Timeline/TimelineStrip';
 
 export default class ViewSelector extends Component {
    constructor(props) {
@@ -32,7 +35,13 @@ export default class ViewSelector extends Component {
             },
             Timeline: {
                name: 'Timeline',
-               getElement: () => <Timeline />
+               getElement: () => <ConnectedTimeline />,
+               getStrip: () => <TimelineStrip />
+            },
+            DopeSheet: {
+               name: 'DopeSheet',
+               getElement: () => <DopeSheet />,
+               getStrip: () => <DopeSheetStrip />
             },
             Info: {
                name: 'Info',
@@ -76,6 +85,7 @@ export default class ViewSelector extends Component {
                   {viewList}
                </Dropdown>
                <AddDropdown />
+               {currentView.getStrip ? currentView.getStrip() : null}
             </div>
          </div>
       );

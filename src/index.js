@@ -6,12 +6,15 @@ import logger from './middlewares/logger';
 
 import App from './components/App';
 import reducers from './reducers';
+import { AnimationProvider } from './modules/AnimationContext';
 
 const createStoreWithMiddleware = applyMiddleware(logger)(createStore);
 
 ReactDOM.render(
    <Provider store={createStoreWithMiddleware(reducers)}>
-      <App />
+      <AnimationProvider>
+         <App />
+      </AnimationProvider>
    </Provider>,
    document.querySelector('.mainHolder')
 );

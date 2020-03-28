@@ -11,7 +11,10 @@ import {
    STOP_RESIZING,
    TRANSFORM_ROW_SIZES_BETWEEN_SIBLINGS,
    START_LEFT_RIGHT_RESIZING,
-   TRANSFORM_COLUMN_SIZES_BETWEEN_SIBLINGS
+   TRANSFORM_COLUMN_SIZES_BETWEEN_SIBLINGS,
+   CHANGE_TIMELINE_PROPERTY,
+   CHANGE_ANIMATION_STATE,
+   MERGE_MESHES_UPDATE
 } from './types';
 
 export function changeScale(scale) {
@@ -72,6 +75,13 @@ export function changeMeshProp(id, prop, value) {
          value
       }
    };
+}
+
+export function mergeMeshesUpdate(newMeshesState) {
+   return {
+      type: MERGE_MESHES_UPDATE,
+      payload: newMeshesState
+   }
 }
 
 export function changeColumnSizes(newColumnSizes) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { mat4 } from 'gl-matrix';
-import { getShaderProgram } from '../shaders/shaders.js';
+import { getShaderProgram } from '../../shaders/shaders.js';
 
 export default class Canvas extends Component {
    constructor(props) {
