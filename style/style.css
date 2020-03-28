@@ -80,6 +80,16 @@ body {
    background-color: green;
 }
 
+/* SCENE */
+
+.activeMesh {
+   color: rgb(210, 190, 100);
+}
+
+.mainSelection {
+   color: rgb(255, 190, 100);
+}
+
 /* DROPDOWN */
 
 .dropdown {

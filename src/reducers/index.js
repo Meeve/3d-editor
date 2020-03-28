@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import meshes from './allMeshes.js';
-import selectedMesh from './selectedMesh.js';
+import { selectedMeshes } from './selectedMeshes';
 import panelLayout from './panelLayout';
 import logs from './logs';
 
 const rootReducer = combineReducers({
    meshes,
-   selectedMesh,
+   selectedMeshes,
    panelLayout,
    logs
 });

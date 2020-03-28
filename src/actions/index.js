@@ -59,10 +59,17 @@ export function addSphere() {
    };
 }
 
-export function selectMesh(el) {
+export function selectMesh(id) {
    return {
       type: 'selectMesh',
-      payload: el
+      payload: id
+   };
+}
+
+export function unselectMesh(id) {
+   return {
+      type: 'unselectMesh',
+      payload: id
    };
 }
 

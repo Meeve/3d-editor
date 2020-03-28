@@ -14,17 +14,19 @@ const getLocationProperties = mesh => {
 
 export const DopeSheetStrip = () => {
     const animation = useContext(AnimationContext);
-    const selectedMesh = useSelector(state => state.selectedMesh);
+    const selectedMeshes = useSelector(state => state.selectedMeshes);
+    const meshes = useSelector(state => state.meshes);
 
     const addNewFrame = () => {
-        if(selectedMesh) {
+        if(selectedMeshes.length > 0) {
+            const selectedMeshId = selectedMeshes[0];
             animation.addKeyFrame({
                 frame: animation.currentFrame,
                 objects: {
-                    [selectedMesh.id]: {
-                        id: selectedMesh.id,
+                    [selectedMeshId]: {
+                        id: selectedMeshId,
                         properties: {
-                            ...getLocationProperties(selectedMesh)
+                            ...getLocationProperties(meshes[selectedMeshId])
                         }
                     }
                 }

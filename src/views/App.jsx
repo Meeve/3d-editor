@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PanelResizer from './PanelResizer';
+import PanelResizer from '../components/PanelResizer';
 
 export default class App extends Component {
    render() {
