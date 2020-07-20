@@ -36,7 +36,7 @@ export default class Dropdown extends React.Component {
 
    getOpenActionsForHover = () => {
       return {
-         onMouseEnter: () => this.setState({ isOpened: true })
+         onMouseEnter: () => this.setState({isOpened: true})
       };
    };
 
@@ -73,7 +73,7 @@ export default class Dropdown extends React.Component {
    };
 
    toggleOpen = () => {
-      this.setState({ isOpened: !this.state.isOpened });
+      this.setState({isOpened: !this.state.isOpened});
    };
 
    getWrapedChildren = () => {
@@ -147,7 +147,7 @@ export default class Dropdown extends React.Component {
          <div
             className="dropdown"
             ref={this.state.opennerHolderRef}
-            onMouseLeave={() => this.setState({ isOpened: false })}>
+            onMouseLeave={() => this.setState({isOpened: false})}>
             <div className="dropdownContent" {...this.state.openActions}>
                {this.props.content}
             </div>

@@ -56,7 +56,7 @@ export default class Scroller extends React.Component {
    onMouseMove(event) {
       if (this.state.scrollBarMoving) {
          let scrollBarPosition = this.state.prevScrollBarPosition + (event.pageY - this.state.yMouseClick);
-         let { prevScrollBarPosition, yMouseClick } = this.state;
+         let {prevScrollBarPosition, yMouseClick} = this.state;
          const maxValue = this.props.height - this.scroller.current.clientHeight - this.getBorderAndMarginSize();
 
          if (scrollBarPosition < 0) {
@@ -92,9 +92,13 @@ export default class Scroller extends React.Component {
       let childOffsetTop = this.state.childOffsetTop + -event.deltaY;
       const maxValue = -(this.state.childHeight - this.props.height);
 
-      if (childOffsetTop < maxValue) childOffsetTop = maxValue;
+      if (childOffsetTop < maxValue) {
+         childOffsetTop = maxValue;
+      }
 
-      if (childOffsetTop > 0) childOffsetTop = 0;
+      if (childOffsetTop > 0) {
+         childOffsetTop = 0;
+      }
 
       this.setState({
          childOffsetTop
@@ -160,7 +164,8 @@ export default class Scroller extends React.Component {
                <div className="childHolder" ref={this.childHolder} style={this.getChildHolderStyle()}>
                   {' '}
                   {this.props.children}{' '}
-               </div>{' '}
+               </div>
+               {' '}
             </div>
 
             <div className="scrollerOuter" style={this.getScrollerOuterStyle()}>
@@ -169,7 +174,8 @@ export default class Scroller extends React.Component {
                   className="scrollerHandler"
                   style={this.getScrollerHandlerStyle()}
                   onMouseDown={this.startScrolling.bind(this)}
-               />{' '}
+               />
+               {' '}
             </div>
          </div>
       );

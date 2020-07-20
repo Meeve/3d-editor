@@ -149,7 +149,7 @@ export default class Canvas extends Component {
    render() {
       this.lastRenderTime = new Date().getTime();
       return (
-         <div style={{ overflow: 'hidden' }} onWheel={this.onScroll}>
+         <div style={{overflow: 'hidden'}} onWheel={this.onScroll}>
             <canvas
                onMouseDown={e => {
                   this.mouseDown = true;
@@ -161,8 +161,8 @@ export default class Canvas extends Component {
                   });
                }}
                onMouseMove={this.mouseMove.bind(this)}
-               onMouseLeave={e => this.setState({ isMouseIn: false })}
-               onMouseEnter={e => this.setState({ isMouseIn: true })}
+               onMouseLeave={e => this.setState({isMouseIn: false})}
+               onMouseEnter={e => this.setState({isMouseIn: true})}
                id={this.state.holder}
                width={this.props.width + 'px'}
                height={this.props.height + 'px'}

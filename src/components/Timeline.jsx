@@ -30,23 +30,23 @@ export default class Timeline extends React.Component {
       const stepSize = this.getStepSize();
       const timelineSize = Math.abs(-stepSize) + stepsAmount * stepSize;
       const proportion = (e.pageX - this.state.timelineXPositionOnScreen) / this.state.timelineWidth;
-      
+
       this.props.changeCurrentFrame(Math.round((timelineSize * proportion) - stepSize));
    }
 
    mouseMove = e => {
-      if(this.state.isMouseDown) {
+      if (this.state.isMouseDown) {
          this.updateSelectionPosition(e);
       }
    }
 
-   mouseDown = () => this.setState({ isMouseDown: true });
+   mouseDown = () => this.setState({isMouseDown: true});
 
-   mouseUp = () => this.setState({ isMouseDown: false });
+   mouseUp = () => this.setState({isMouseDown: false});
 
    updateTimelinePosition = el => {
       if (el) {
-         const {x, width } = el.getBoundingClientRect()
+         const {x, width} = el.getBoundingClientRect()
          this.setState({
             timelineXPositionOnScreen: x,
             timelineWidth: width
@@ -84,11 +84,11 @@ export default class Timeline extends React.Component {
    render() {
       const stepsAmount = this.getStepAmount();
       const stepSize = this.getStepSize();
-      
+
       const timelineSize = Math.abs(-stepSize) + stepsAmount * stepSize;
       const proportion = (this.props.currentFrame + stepSize) / timelineSize;
       const selectionPosition = proportion * this.state.timelineWidth; // This is very missleading, translation should be implemented...
-      
+
       const strips = _.range(stepsAmount).map((item, key) => (
          <div key={key} className="outer-strip">
             <div className="inner-strip" />
@@ -99,18 +99,19 @@ export default class Timeline extends React.Component {
          (stripValue, key) => <span key={key}>{stripValue * stepSize}</span>
       );
 
-      const keyFrames = this.props.keyFrames.map(keyframe => <div className="keyFrame" style={{left: this.transformValueToabsolutPosition(keyframe.frame)}}></div>);
+      const keyFrames = this.props.keyFrames.map(keyframe => <div className="keyFrame"
+                                                                  style={{left: this.transformValueToabsolutPosition(keyframe.frame)}}></div>);
 
       return (
-         <div className="timeline-background" 
-            onWheel={this.onScroll}
-            onMouseUp={this.mouseUp} 
-            onMouseDown={e => {
-               this.mouseDown(e);
-               this.updateSelectionPosition(e);
-            }} 
-            onMouseMove={this.mouseMove} 
-            ref={this.updateTimelinePosition}>
+         <div className="timeline-background"
+              onWheel={this.onScroll}
+              onMouseUp={this.mouseUp}
+              onMouseDown={e => {
+                 this.mouseDown(e);
+                 this.updateSelectionPosition(e);
+              }}
+              onMouseMove={this.mouseMove}
+              ref={this.updateTimelinePosition}>
             <div className="stripes">
                <div className="timeline" style={{
                   left: this.transformValueToabsolutPosition(this.props.firstFrame),

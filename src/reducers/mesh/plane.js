@@ -13,14 +13,17 @@ export default function plane() {
       rz: 0
    };
 }
+
 // prettier-ignore
 function getVertices() {
    return [+1.0, 0, +1.0, +1.0, 0, -1.0, -1.0, 0, -1.0, -1.0, 0, +1.0];
 }
+
 // prettier-ignore
 function getFaces() {
    return [0, 1, 2, 2, 3, 0];
 }
+
 // prettier-ignore
 function getColors() {
    return [0.7, 0.0, 0.0, 1.0, 0.9, 0.9, 0.9, 1.0, 0.7, 0.0, 0.0, 1.0, 0.9, 0.9, 0.9, 1.0];

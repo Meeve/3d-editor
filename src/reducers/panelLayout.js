@@ -27,31 +27,31 @@ function getDefaultPanelLayout() {
             colEnd: 4,
             rowStart: 1,
             rowEnd: 2,
-            elementProperties: { selectedView: 'Info' }
+            elementProperties: {selectedView: 'Info'}
          },
 
-         { element: ViewSelector, colStart: 1, colEnd: 2, rowStart: 2, rowEnd: 3 },
+         {element: ViewSelector, colStart: 1, colEnd: 2, rowStart: 2, rowEnd: 3},
          {
             element: ViewSelector,
             colStart: 2,
             colEnd: 3,
             rowStart: 2,
             rowEnd: 3,
-            elementProperties: { selectedView: 'Scene' }
+            elementProperties: {selectedView: 'Scene'}
          }, {
             element: ViewSelector,
             colStart: 3,
             colEnd: 4,
             rowStart: 2,
             rowEnd: 3,
-            elementProperties: { selectedView: 'DopeSheet' }
+            elementProperties: {selectedView: 'DopeSheet'}
          }, {
             element: ViewSelector,
             colStart: 1,
             colEnd: 4,
             rowStart: 3,
             rowEnd: 4,
-            elementProperties: { selectedView: 'Timeline' }
+            elementProperties: {selectedView: 'Timeline'}
          }
 
          // {element: ViewSelector, colStart: 1, colEnd: 3, rowStart: 3, rowEnd: 4},

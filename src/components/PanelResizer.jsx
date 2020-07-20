@@ -155,15 +155,13 @@ class PanelResizer extends React.Component {
    render() {
       const resizerBoxes = _.map(this.props.panelLayout.components, (el, key) => this.createResizeBox(el, key));
 
-      return (
-         <div
-            className="app"
-            onMouseMove={this.appResize.bind(this)}
-            onMouseUp={this.stopResizing.bind(this)}
-            style={this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)}>
-            {resizerBoxes}
-         </div>
-      );
+      return <div
+         className="app"
+         onMouseMove={this.appResize.bind(this)}
+         onMouseUp={this.stopResizing.bind(this)}
+         style={this.calculateGridStyles(this.props.panelLayout.columnSizes, this.props.panelLayout.rowSizes)}>
+         {resizerBoxes}
+      </div>;
    }
 }
 
