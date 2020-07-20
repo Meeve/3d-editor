@@ -5,7 +5,7 @@ import * as actions from '../actions';
 class PanelManipulator extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             panelMultiplayer: false
         };
@@ -13,16 +13,16 @@ class PanelManipulator extends React.Component {
 
     getUpperSiblingComponentWithSameWidth(element) {
         return _.filter(this.props.panelLayout.components, potentialUpperComponent => {
-            return element.rowStart == potentialUpperComponent.rowEnd && 
-                element.colStart == potentialUpperComponent.colStart && 
+            return element.rowStart == potentialUpperComponent.rowEnd &&
+                element.colStart == potentialUpperComponent.colStart &&
                 element.colEnd == potentialUpperComponent.colEnd;
         })[0];
     }
 
     getRightSiblingComponentWithSameHeight(element) {
         return _.filter(this.props.panelLayout.components, potentialUpperComponent => {
-            return element.colEnd == potentialUpperComponent.colStart && 
-                element.rowStart == potentialUpperComponent.rowStart && 
+            return element.colEnd == potentialUpperComponent.colStart &&
+                element.rowStart == potentialUpperComponent.rowStart &&
                 element.rowEnd == potentialUpperComponent.rowEnd;
         })[0];
     }
@@ -34,8 +34,8 @@ class PanelManipulator extends React.Component {
 
     isRowNotNeededAnymore(row) {
         return _.filter(this.props.panelLayout.components, component => component.rowStart == row || component.rowEnd == row).length <= 2;
-    } 
-    
+    }
+
     updateColumnGridDefinition(nextColumnStart) {
         const indexInColumnArray = nextColumnStart - 1;
         this.props.removeColumn(indexInColumnArray);
@@ -57,7 +57,7 @@ class PanelManipulator extends React.Component {
                     component.rowEnd--;
                 }
                 return component;
-            }); 
+            });
         }
         return _.map(this.props.panelLayout.components, component => component);
     }
@@ -74,12 +74,12 @@ class PanelManipulator extends React.Component {
                     component.colEnd--;
                 }
                 return component;
-            }); 
+            });
         }
         return _.map(this.props.panelLayout.components, component => component);
     }
 
-    getComponentWithUpdatedColumnRezisedElement(components, element, rightComponent) {
+    getComponentWithUpdatedColumnResizedElement(components, element, rightComponent) {
         return _.map(components, component => {
             if(component == element)
                 component.colEnd = rightComponent.colEnd;
@@ -88,7 +88,7 @@ class PanelManipulator extends React.Component {
         });
     }
 
-    getComponentWithUpdatedRowRezisedElement(components, element, rightComponent) {
+    getComponentWithUpdatedRowResizedElement(components, element, rightComponent) {
         return _.map(components, component => {
             if(component == element)
                 component.rowStart = rightComponent.rowStart;
@@ -105,9 +105,9 @@ class PanelManipulator extends React.Component {
         const upperComponent = this.getUpperSiblingComponentWithSameWidth(element);
         if(upperComponent) {
             const components = this.calculateNewRowPlaces(element.rowStart);
-            const componentWithUpdatedRezisedElement = this.getComponentWithUpdatedRowRezisedElement(components, element, upperComponent);
-            
-            this.props.updateComponents(componentWithUpdatedRezisedElement);
+            const componentWithUpdatedResizedElement = this.getComponentWithUpdatedRowResizedElement(components, element, upperComponent);
+
+            this.props.updateComponents(componentWithUpdatedResizedElement);
             this.props.removeComponent(upperComponent);
         }
     }
@@ -115,14 +115,14 @@ class PanelManipulator extends React.Component {
     wasRightLeave(targetBoundingRect, event) {
         return event.pageX > targetBoundingRect.left + targetBoundingRect.width;ss
     }
-    
+
     handleRightLeave(element) {
         const rightComponent = this.getRightSiblingComponentWithSameHeight(element);
         if(rightComponent) {
             const components = this.calculateNewColumnPlaces(element.colEnd);
-            const componentWithUpdatedRezisedElement = this.getComponentWithUpdatedColumnRezisedElement(components, element, rightComponent);
-    
-            this.props.updateComponents(componentWithUpdatedRezisedElement);
+            const componentWithUpdatedResizedElement = this.getComponentWithUpdatedColumnResizedElement(components, element, rightComponent);
+
+            this.props.updateComponents(componentWithUpdatedResizedElement);
             this.props.removeComponent(rightComponent);
         }
     }
@@ -154,7 +154,7 @@ class PanelManipulator extends React.Component {
     }
 
     wasLeftLeave(targetBoundingRect, event) {
-        return targetBoundingRect.left >= event.pageX; 
+        return targetBoundingRect.left >= event.pageX;
     }
 
     handleLeftLeave(element, event) {
@@ -176,7 +176,7 @@ class PanelManipulator extends React.Component {
             if(component == element)
                 component.colEnd--;
             return component;
-        }); 
+        });
 
         this.props.updateComponents(newComponents.concat(newComponent));
         this.props.startLeftRightResizing(prevElementCol - 2, event.pageX);
