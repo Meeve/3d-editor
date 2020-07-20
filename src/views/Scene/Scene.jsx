@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changeScale, addCube, addPlane, addPyramid, addIcosa, selectMesh, changeMeshProp, unselectMesh } from '../../actions/index.js';
+import {
+   addCube,
+   addIcosa,
+   addPlane,
+   addPyramid,
+   changeMeshProp,
+   changeScale,
+   selectMesh,
+   unselectMesh
+} from '../../actions/index.js';
 import { NumberField } from '../../components/inputs/NumberField';
 import _ from 'lodash';
+import classes from 'classnames';
 
 class Scene extends Component {
    constructor(props) {
@@ -30,7 +40,7 @@ class Scene extends Component {
 
    render() {
       let controls = 'Not selected yet';
-      
+
       if (this.props.selectedMeshes.length > 0) {
          const selectedMesh = this.props.meshes[this.props.selectedMeshes[0]];
          controls = (
@@ -97,10 +107,13 @@ class Scene extends Component {
             <div className="row">
                <ul>
                   {_.map(this.props.meshes, el => (
-                     <li 
-                        key={el.id} 
-                        className={(this.isMeshSelected(el.id) ? 'activeMesh' : "") + " " + (this.props.selectedMeshes[0] === el.id ? "mainSelection" : '')}
-                        onClick={() => this.toggleSelection(el.id)} 
+                     <li
+                        key={el.id}
+                        className={classes({
+                           'activeMesh': this.isMeshSelected(el.id),
+                           "mainSelection": this.props.selectedMeshes[0] === el.id
+                        })}
+                        onClick={() => this.toggleSelection(el.id)}
                         title={JSON.stringify(el)}>
                         #{el.id} - {el.name}
                      </li>
@@ -122,7 +135,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
    return bindActionCreators(
-      { changeScale, addCube, addPlane, addPyramid, addIcosa, selectMesh, changeMeshProp, unselectMesh },
+      {changeScale, addCube, addPlane, addPyramid, addIcosa, selectMesh, changeMeshProp, unselectMesh},
       dispatch
    );
 }
