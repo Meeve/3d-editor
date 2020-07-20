@@ -37,6 +37,7 @@ function getVertices() {
       +0.0
    ];
 }
+
 // prettier-ignore
 function getFaces() {
    return [
@@ -63,6 +64,7 @@ function getFaces() {
       4
    ];
 }
+
 // prettier-ignore
 function getColors() {
    return [

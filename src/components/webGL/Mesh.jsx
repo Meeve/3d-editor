@@ -1,6 +1,5 @@
 import React from 'react';
 import { mat4 } from 'gl-matrix';
-import _ from 'lodash';
 
 export default class Mesh extends React.Component {
    constructor(props) {
@@ -28,7 +27,7 @@ export default class Mesh extends React.Component {
       this.props.gl.bindBuffer(this.props.gl.ARRAY_BUFFER, colorBuffer);
       this.props.gl.bufferData(this.props.gl.ARRAY_BUFFER, new Float32Array(model.colors), this.props.gl.STATIC_DRAW);
 
-      this.state = { vertexBuffer, faceBuffer, colorBuffer };
+      this.state = {vertexBuffer, faceBuffer, colorBuffer};
    }
 
    getModelMatrix = model => {
