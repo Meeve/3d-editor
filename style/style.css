@@ -238,3 +238,35 @@ body {
 .infoList div:nth-child(even) {
    background-color: rgb(108, 108, 108);
 }
+
+/* properties */
+
+.properties-container {
+   display: flex;
+}
+
+.properties-container > div {
+   height: 20px;
+   width: 20px;
+   background-color: #605e5f;
+   background-repeat: no-repeat;
+   background-position: center;
+   filter: brightness(80%);
+}
+
+.properties-container > div:hover {
+   cursor: pointer;
+   filter: brightness(100%);
+}
+
+.first-properties {
+   background-image: url('../images/properties/render.png');
+}
+
+.second-properties {
+   background-image: url('../images/properties/material.jpg');
+}
+
+.third-properties {
+   background-image: url('../images/properties/texture.jpg');
+}

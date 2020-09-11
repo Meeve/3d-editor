@@ -9,7 +9,7 @@ export default class Dropdown extends React.Component {
          opennerHolderRef: React.createRef(),
          calculateDirection: this.getStyleCalculatingFunction(),
          openActions: this.getOpenActions(),
-         isOpened: false
+         isOpened: false,
       };
    }
 
@@ -18,7 +18,7 @@ export default class Dropdown extends React.Component {
       const choosenAction = this.props.openAction === undefined ? defaultOpenAction : this.props.openAction;
       const openActions = {
          click: this.getOpenActionsForClick(),
-         hover: this.getOpenActionsForHover()
+         hover: this.getOpenActionsForHover(),
       };
 
       if (!openActions[choosenAction]) {
@@ -30,13 +30,13 @@ export default class Dropdown extends React.Component {
 
    getOpenActionsForClick = () => {
       return {
-         onClick: this.toggleOpen
+         onClick: this.toggleOpen,
       };
    };
 
    getOpenActionsForHover = () => {
       return {
-         onMouseEnter: () => this.setState({ isOpened: true })
+         onMouseEnter: () => this.setState({ isOpened: true }),
       };
    };
 
@@ -45,7 +45,7 @@ export default class Dropdown extends React.Component {
       const choosenDirection = this.props.direction === undefined ? defaultDirection : this.props.direction;
       const directions = {
          top: this.calculateStyleForTopDirection,
-         right: this.calculateStyleForRightDirection
+         right: this.calculateStyleForRightDirection,
       };
 
       if (!directions[choosenDirection]) {
@@ -55,10 +55,10 @@ export default class Dropdown extends React.Component {
       return directions[choosenDirection];
    };
 
-   calculateStyleForTopDirection = dropdownSizes => {
+   calculateStyleForTopDirection = (dropdownSizes) => {
       return {
          top: -dropdownSizes.height + 'px',
-         left: 0
+         left: 0,
       };
    };
 
@@ -68,7 +68,7 @@ export default class Dropdown extends React.Component {
             opennerSizes.top + dropdownSizes.height > window.innerHeight
                ? -dropdownSizes.height + opennerSizes.height + 'px'
                : 0,
-         left: opennerSizes.width + 'px'
+         left: opennerSizes.width + 'px',
       };
    };
 
@@ -129,7 +129,7 @@ export default class Dropdown extends React.Component {
             width: dropdownSizes.width + catcherBound * 2 + 'px',
             height: dropdownSizes.height + catcherBound * 2 + 'px',
             top: -catcherBound + parseInt(innerContainerStyles.top) + 'px',
-            left: -catcherBound + parseInt(innerContainerStyles.left) + 'px'
+            left: -catcherBound + parseInt(innerContainerStyles.left) + 'px',
          };
       }
 

@@ -6,6 +6,7 @@ import ConnectedCanvas from '../views/ConnectedCanvas';
 import Dropdown from './dropdown/Dropdown';
 import Timeline from './Timeline';
 import Info from './Info';
+import Properties from './properties/Properties';
 
 export default class ViewSelector extends Component {
    constructor(props) {
@@ -18,7 +19,7 @@ export default class ViewSelector extends Component {
                name: 'Canvas',
                getElement: () => (
                   <ConnectedCanvas height={this.props.componentHeight - 25} width={this.props.componentWidth} />
-               )
+               ),
             },
             Scene: {
                name: 'Scene',
@@ -28,11 +29,11 @@ export default class ViewSelector extends Component {
                         <Scene />
                      </Scroller>
                   );
-               }
+               },
             },
             Timeline: {
                name: 'Timeline',
-               getElement: () => <Timeline />
+               getElement: () => <Timeline />,
             },
             Info: {
                name: 'Info',
@@ -42,16 +43,26 @@ export default class ViewSelector extends Component {
                         <Info />
                      </Scroller>
                   );
-               }
-            }
+               },
+            },
+            Properties: {
+               name: 'Properties',
+               getElement: () => {
+                  return (
+                     <div>
+                        <Properties />
+                     </div>
+                  );
+               },
+            },
          },
-         selectedView: this.props.elementProperties ? this.props.elementProperties.selectedView : 'Canvas'
+         selectedView: this.props.elementProperties ? this.props.elementProperties.selectedView : 'Canvas',
       };
    }
 
    viewChanged(view) {
       this.setState({
-         selectedView: view
+         selectedView: view,
       });
    }
 
@@ -68,7 +79,7 @@ export default class ViewSelector extends Component {
             style={{
                display: 'grid',
                gridTemplateRows: '1fr 25px',
-               overflow: 'hidden'
+               overflow: 'hidden',
             }}>
             {currentView.getElement()}
             <div className="viewSelectorStrip">
