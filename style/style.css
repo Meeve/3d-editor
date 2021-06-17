@@ -355,3 +355,13 @@ body {
    margin: 0 5px;
    overflow: hidden;
 }
+
+.timelineStipContainer {
+   display: flex;
+   align-items: center;
+}
+
+.timelineStripInput {
+   background-color: transparent;
+   border: none;
+}

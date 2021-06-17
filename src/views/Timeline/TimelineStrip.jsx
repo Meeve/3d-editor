@@ -8,7 +8,7 @@ export default class TimelineStrip extends React.Component {
     render() {
         return (<div className="timelineStrip">
             <div> {/* need for this div is total fail */}
-                <IntegerField 
+                <IntegerField
                     value={this.context.currentFrame} 
                     onChange={value => this.context.changeCurrentFrame(value)}
                     slideSpeed={20}

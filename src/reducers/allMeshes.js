@@ -18,6 +18,8 @@ export default (state = {}, action) => {
          return addMesh(icosahedron(), state, 'New icosahedron');
       case 'addSphere':
          return addMesh(sphere(), state, 'New sphere');
+      case 'importFile':
+         return importFile(state, action);
 
       case 'changeMeshProp':
          return changeMeshProp(state, action);
@@ -29,6 +31,10 @@ export default (state = {}, action) => {
 };
 
 let lastId = 1;
+
+function importFile(state, action) {
+   return { ...action.payload.meshes };
+}
 
 function addMesh(mesh, state, defaultName) {
    mesh.id = lastId++;

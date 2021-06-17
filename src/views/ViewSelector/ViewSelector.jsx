@@ -9,6 +9,7 @@ import { DopeSheet } from '../DopeSheet/DopeSheet';
 import { DopeSheetStrip } from '../DopeSheet/DopeSheetStrip';
 import Info from '../Info/Info';
 import TimelineStrip from '../Timeline/TimelineStrip';
+import InfoStrip from "../Info/InfoStrip" 
 
 export default class ViewSelector extends Component {
    constructor(props) {
@@ -51,7 +52,8 @@ export default class ViewSelector extends Component {
                         <Info />
                      </Scroller>
                   );
-               }
+               },
+               getStrip: () => <InfoStrip />
             }
          },
          selectedView: this.props.elementProperties ? this.props.elementProperties.selectedView : 'Canvas'

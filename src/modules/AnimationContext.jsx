@@ -41,12 +41,13 @@ const keyFramesHooks = () => {
 
    return {
       keyFrames,
-      addKeyFrame
+      addKeyFrame,
+      setKeyFrames
    }
 }
 
 export const AnimationProvider = ({children}) => {
-   const {keyFrames, addKeyFrame} = keyFramesHooks();
+   const {keyFrames, addKeyFrame, setKeyFrames} = keyFramesHooks();
    const [animationInterval, setAnimationInterval] = useState(null);
    const dispatch = useDispatch();
 
@@ -199,7 +200,8 @@ export const AnimationProvider = ({children}) => {
 
          isAnimationTurnOn,
          keyFrames,
-         addKeyFrame
+         addKeyFrame,
+         setKeyFrames
       }}
    >
       {children}

@@ -24,6 +24,13 @@ export function changeScale(scale) {
    };
 }
 
+export function importFile(file) {
+   return {
+      type: 'importFile',
+      payload: file
+   };
+}
+
 export function addCube() {
    return {
       type: 'addCube',
@@ -182,3 +189,4 @@ export function stopResizing() {
       type: STOP_RESIZING
    };
 }
+
